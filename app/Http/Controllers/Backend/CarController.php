@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Car;
+use App\Models\Driver;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Driver;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -72,7 +73,12 @@ class CarController extends Controller
 
         $image = $request->file('image');
         $image_name = time() . '.' . $image->extension();
-        $image->move(public_path('images/cars'), $image_name);
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(300, 300);
+        if (!file_exists(public_path('images/cars'))) {
+            mkdir(public_path('images/cars'), 0777, true);
+        }
+        $image_resize->save(public_path('images/cars/' . $image_name));
 
         $car = Car::create([
             'driver_id' => $request->driver_id,
@@ -136,10 +142,17 @@ class CarController extends Controller
         }
 
         if ($request->hasFile('image')) {
+            if (file_exists(public_path('images/cars/' . $car->image))) {
+                unlink(public_path('images/cars/' . $car->image));
+            }
             $image = $request->file('image');
             $image_name = time() . '.' . $image->extension();
-            $image->move(public_path('images/cars'), $image_name);
-            $car->image = $image_name;
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->resize(300, 300);
+            if (!file_exists(public_path('images/cars'))) {
+                mkdir(public_path('images/cars'), 0777, true);
+            }
+            $image_resize->save(public_path('images/cars/' . $image_name));
         }
 
         $car->driver_id = $request->driver_id;
@@ -168,6 +181,9 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
+        if (file_exists(public_path('images/cars/' . $car->image))) {
+            unlink(public_path('images/cars/' . $car->image));
+        }
         $car->delete();
         return response()->json([
             'status' => 'success',

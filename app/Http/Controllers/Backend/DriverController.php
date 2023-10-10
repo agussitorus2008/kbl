@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -63,7 +64,13 @@ class DriverController extends Controller
 
         $image = $request->file('image');
         $image_name = time() . '.' . $image->extension();
-        $image->move(public_path('images/drivers'), $image_name);
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(300, 300);
+        if (!file_exists(public_path('images/drivers'))) {
+            mkdir(public_path('images/drivers'), 0777, true);
+        }
+        $image_resize->save(public_path('images/drivers/' . $image_name));
+
 
         $driver = Driver::create([
             'name' => $request->name,
@@ -122,9 +129,17 @@ class DriverController extends Controller
         }
 
         if ($request->hasFile('image')) {
+            if (file_exists(public_path('images/drivers/' . $driver->image))) {
+                unlink(public_path('images/drivers/' . $driver->image));
+            }
             $image = $request->file('image');
             $image_name = time() . '.' . $image->extension();
-            $image->move(public_path('images/drivers'), $image_name);
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->resize(300, 300);
+            if (!file_exists(public_path('images/drivers'))) {
+                mkdir(public_path('images/drivers'), 0777, true);
+            }
+            $image_resize->save(public_path('images/drivers/' . $image_name));
             $driver->image = $image_name;
         }
 
@@ -152,6 +167,10 @@ class DriverController extends Controller
      */
     public function destroy(Driver $driver)
     {
+        if (file_exists(public_path('images/drivers/' . $driver->image))) {
+            unlink(public_path('images/drivers/' . $driver->image));
+        }
+
         $driver->delete();
         return response()->json([
             'status' => 'success',
