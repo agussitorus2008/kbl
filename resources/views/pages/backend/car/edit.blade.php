@@ -71,7 +71,7 @@
                                     }
                                 </style>
                                 <!--end::Image input placeholder-->
-                                <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+                                <div class="image-input image-input-outline image-input-placeholder mb-3"
                                     data-kt-image-input="true">
                                     <!--begin::Preview existing primary image-->
                                     <div class="image-input-wrapper w-150px h-150px"
@@ -124,9 +124,10 @@
                             <div class="card-body pt-0">
                                 <select class="form-select mb-2"name="type" data-control="select2"
                                     data-placeholder="Choose Type" data-hide-search="true">
-                                    <option value="bus" {{ $car->type == 'bus' ? 'selected' : '' }}>Bus</option>
-                                    <option value="minibus" {{ $car->type == 'minibus' ? 'selected' : '' }}>Minibus</option>
-                                    <option value="car" {{ $car->type == 'car' ? 'selected' : '' }}>Car</option>
+                                    <option value="executive" {{ $car->type == 'executive' ? 'selected' : '' }}>Executive
+                                    </option>
+                                    <option value="non-executive" {{ $car->type == 'non-executive' ? 'selected' : '' }}>
+                                        Non-Executive</option>
                                 </select>
                             </div>
                         </div>
@@ -156,7 +157,7 @@
                                             name="driver_id" class="form-select form-select-solid mb-2">
                                             @foreach ($drivers as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == $data->driver_id ? 'selected' : '' }}>
+                                                    {{ $item->id == $car->driver_id ? 'selected' : '' }}>
                                                     {{ $item->name }}
                                                 </option>
                                             @endforeach
@@ -192,8 +193,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="int" class="form-control mb-2" name="car_number"
-                                            placeholder="Enter the number of the car..."
-                                            value="{{ $car->car_number }}" />
+                                            placeholder="Enter the number of the car..." value="{{ $car->car_number }}" />
                                         <!--end::Input-->
                                         <!--begin::Description-->
                                         <div class="text-muted fs-7">Enter the number of the car.

@@ -29,8 +29,8 @@ class OrderController extends Controller
             return DataTables::of($orders)
                 ->addColumn('action', function ($order) {
                     if (in_array($order->status, ['pending', 'canceled'])) {
-                        $approveRoute = route('backend.order.approve', $order->id);
-                        $rejectRoute = route('backend.order.reject', $order->id);
+                        $approveRoute = route('backend.orders.approve', $order->id);
+                        $rejectRoute = route('backend.orders.reject', $order->id);
 
                         return '
                     <div class="btn-group" role="group">

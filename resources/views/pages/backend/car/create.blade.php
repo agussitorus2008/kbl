@@ -122,9 +122,8 @@
                             <div class="card-body pt-0">
                                 <select class="form-select mb-2"name="type" data-control="select2"
                                     data-placeholder="Choose Type" data-hide-search="true">
-                                    <option value="bus">Bus</option>
-                                    <option value="minibus">Minibus</option>
-                                    <option value="car">Mobil</option>
+                                    <option value="executive">Executive</option>
+                                    <option value="non-executive">Non-Executive</option>
                                 </select>
                             </div>
                         </div>

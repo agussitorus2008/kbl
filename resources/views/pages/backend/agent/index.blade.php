@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
-@section('title', 'Schedules')
-@section('page', 'Schedules')
+@section('title', 'Coupons')
+@section('page', 'Coupons')
 @section('breadcrumb')
     <!--begin::Breadcrumb-->
     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
@@ -18,7 +18,7 @@
 
         <!--begin::Item-->
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('backend.schedules.index') }}" class="text-muted text-hover-primary">Schedules</a>
+            <a href="{{ route('backend.coupons.index') }}" class="text-muted text-hover-primary">Coupons</a>
         </li>
         <!--end::Item-->
         <!--begin::Item-->
@@ -29,7 +29,7 @@
 
         <!--begin::Item-->
         <li class="breadcrumb-item text-dark">
-            All Schedules
+            All Coupons
         </li>
         <!--end::Item-->
     </ul>
@@ -61,31 +61,26 @@
                                 placeholder="Cari data..." />
                         </div>
                         <!--end::Search-->
-                        <!--begin::Card toolbar-->
-                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                            <!--begin::Add schedule-->
-                            <a href="{{ route('backend.schedules.create') }}" class="btn btn-primary">
-                                Add Schedule
-                            </a>
-                            <!--end::Add schedule-->
+                        <div class="card-toolbar">
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ route('backend.agents.create') }}" class="btn btn-primary">Tambah
+                                    Data</a>
+                            </div>
                         </div>
-                        <!--end::Card toolbar-->
                     </div>
                     <div class="card-body pt-0">
                         <div class="table-responsive">
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatables">
                                 <thead>
                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                        <th class="min-w-50px">No</th>
-                                        <th class="min-w-125px">Driver</th>
-                                        <th class="min-w-125px">Route</th>
-                                        <th class="min-w-125px">Departure Time</th>
-                                        <th class="min-w-125px">Arrival Time</th>
-                                        <th class="min-w-125px">Price</th>
-                                        <th class="min-w-70px">Actions</th>
+                                        <th class="min-w-125px">Name</th>
+                                        <th class="min-w-125px">Phone</th>
+                                        <th class="min-w-125px">City</th>
+                                        <th class="min-w-125px">Address</th>
+                                        <th class="text-end min-w-70px">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="fw-bold text-gray-600">
+                                <tbody>
                                 </tbody>
                             </table>
                         </div>
@@ -102,61 +97,35 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route('backend.schedules.index') }}',
+                    url: '{{ route('backend.agents.index') }}',
                 },
                 columns: [{
-                        data: 'DT_RowIndex',
-                        defaultContent: '',
-                        orderable: false,
-                        searchable: false,
+                        data: 'name',
+                        name: 'name'
                     },
                     {
-                        data: 'driver_name',
-                        name: 'driver_name',
+                        data: 'phone',
+                        name: 'phone'
                     },
                     {
-                        data: 'route',
-                        name: 'route'
+                        data: 'city',
+                        name: 'city'
                     },
                     {
-                        data: 'departure_time',
-                        name: 'departure_time'
-                    },
-                    {
-                        data: 'arrival_time',
-                        name: 'arrival_time'
-                    },
-                    {
-                        data: 'price',
-                        name: 'price'
+                        data: 'address',
+                        name: 'address'
                     },
                     {
                         data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false
-                    },
-                ],
+                    }
+                ]
             });
 
-            // set number for datatables
-            $('#datatables').on('draw.dt', function() {
-                var info = $('#datatables').DataTable().page.info();
-                $('#datatables').DataTable().column(0, {
-                    page: 'current'
-                }).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1 + info.start;
-                });
-            });
-
-            $('input[name=keywords]').on('keyup', function() {
-                console.log($(this).val());
+            $('input[name="keywords"]').on('keyup', function(e) {
                 $('#datatables').DataTable().search($(this).val()).draw();
-            });
-
-            $('select[name=route]').on('change', function() {
-                console.log($(this).val());
-                $('#datatables').DataTable().column(2).search($(this).val()).draw();
             });
         });
     </script>

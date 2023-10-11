@@ -9,6 +9,12 @@ class Schedule extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::creating(function (Schedule $schedule) {
+            $schedule->available_seats = $schedule->car->capacity;
+        });
+    }
     /**
      * The attributes that are mass assignable.
      *

@@ -12,6 +12,19 @@ use App\Notifications\NewChatNotification;
 
 class ChatController extends Controller
 {
+    private $messages;
+    public function __construct()
+    {
+        $this->messages = [
+            'sent_to.required' => 'Penerima harus diisi',
+            'sent_to.exists' => 'Penerima tidak ditemukan',
+            'message.required' => 'Pesan harus diisi',
+        ];
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -22,12 +35,15 @@ class ChatController extends Controller
         return view('pages.backend.chat.index');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         // Validate the request data
         $request->validate([
             'message' => 'required|string|max:255',
-        ]);
+        ], $this->messages);
 
         // Create a new chat message
         $chat = new Chat([

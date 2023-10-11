@@ -11,6 +11,21 @@ use Illuminate\Support\Facades\Validator;
 
 class DriverController extends Controller
 {
+    private $messages;
+    public function __construct()
+    {
+        $this->messages = [
+            'name.required' => 'Nama harus diisi',
+            'phone.required' => 'Nomor telepon harus diisi',
+            'phone.numeric' => 'Nomor telepon harus berupa angka',
+            'phone.unique' => 'Nomor telepon sudah digunakan',
+            'address.required' => 'Alamat harus diisi',
+            'image.required' => 'Gambar harus diisi',
+            'image.image' => 'Gambar harus berupa gambar',
+            'image.mimes' => 'Gambar harus berupa jpeg, png, jpg, gif, svg',
+            'image.max' => 'Gambar maksimal 2048 KB',
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -21,10 +36,10 @@ class DriverController extends Controller
                 ->addColumn('action', function ($driver) {
                     return '
                     <div class="btn-group" role="group">
-                    <a href="javascript:;" onclick="load_input(\'' . route('backend.driver.edit', $driver->id) . '\');" class="btn btn-sm btn-warning">
+                    <a href="' . route('backend.drivers.edit', $driver->id) . '" class="btn btn-sm btn-warning">
                         <i class="fas fa-solid fa-pen-to-square"></i>
                     </a>
-                    <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . route('backend.driver.destroy', $driver->id) . '\');" class="btn btn-sm btn-danger">
+                    <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . route('backend.drivers.destroy', $driver->id) . '\');" class="btn btn-sm btn-danger">
                         <i class="fa fa-trash"></i>
                     </a>
                     </div>';
@@ -53,7 +68,7 @@ class DriverController extends Controller
             'phone' => 'required|numeric|unique:drivers',
             'address' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -83,7 +98,7 @@ class DriverController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil ditambahkan',
-                'redirect' => route('backend.driver.index'),
+                'redirect' => route('backend.drivers.index'),
             ]);
         } else {
             return response()->json([
@@ -119,7 +134,7 @@ class DriverController extends Controller
             'phone' => 'required|numeric|unique:drivers,phone,' . $driver->id,
             'address' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -152,7 +167,7 @@ class DriverController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil diubah',
-                'redirect' => route('backend.driver.index'),
+                'redirect' => route('backend.drivers.index'),
             ]);
         } else {
             return response()->json([

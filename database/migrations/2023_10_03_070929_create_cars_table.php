@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('driver_id')->constrained('drivers');
+            $table->foreignId('driver_id')->constrained('drivers')->onDelete('cascade');
             $table->integer('capacity');
             $table->integer('car_number')->unique();
             $table->string('plate_number')->unique();
-            $table->enum('type', ['bus', 'minibus', 'car']);
+            $table->enum('type', ['executive', 'non-executive']);
             $table->string('image');
             $table->timestamps();
             $table->softDeletes();

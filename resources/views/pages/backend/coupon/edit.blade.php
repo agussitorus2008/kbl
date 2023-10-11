@@ -67,7 +67,7 @@
                                         memiliki sudah memesan 5 atau lebih kursi.</div>
                                     <!--end::Label-->
                                     <!--begin::Select-->
-                                    <select name="user_id" class="form-select form-select-solid" data-control="select2"
+                                    <select name="user_id" class="form-select mb-2" data-control="select2"
                                         data-placeholder="Select option">
                                         <option value="">Select option</option>
                                         @foreach ($users as $user)
@@ -89,7 +89,7 @@
                                     <label class="required form-label">Discount</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" name="discount" class="form-control form-control-solid"
+                                    <input type="text" name="discount" class="form-control mb-2"
                                         placeholder="Enter discount" value="{{ $coupon->discount }}" />
                                     <!--end::Input-->
                                     <!--begin::Description-->
@@ -104,8 +104,8 @@
                                     <label class="required form-label">Limit</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" name="limit" class="form-control form-control-solid"
-                                        placeholder="Enter limit" value="{{ $coupon->limit }}" />
+                                    <input type="text" name="limit" class="form-control mb-2" placeholder="Enter limit"
+                                        value="{{ $coupon->limit }}" />
                                     <!--end::Input-->
                                     <!--begin::Description-->
                                     <div class="text-muted fs-7">Set the limit that will be used to identify this coupon.

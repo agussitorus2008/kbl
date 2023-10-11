@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AgentController extends Controller
 {
+    private $messages;
+    public function __construct()
+    {
+        $this->messages = [
+            'name.required' => 'Nama harus diisi',
+            'phone.required' => 'Nomor telepon harus diisi',
+            'city.required' => 'Kota harus diisi',
+            'address.required' => 'Alamat harus diisi',
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,17 +30,14 @@ class AgentController extends Controller
 
             return DataTables::of($agents)
                 ->addColumn('action', function ($agent) {
-                    $editRoute = route('backend.agent.edit', $agent->id);
-                    $deleteRoute = route('backend.agent.destroy', $agent->id);
-
                     return '
                         <div class="btn-group">
-                            <a href="javascript:;" onclick="load_input(\'' . $editRoute . '\');"
+                            <a href="' . route('backend.agents.edit', $agent->id) . '"
                                 class="btn btn-sm btn-warning">
                                 <i class="fas fa-solid fa-pen-to-square"></i>
                             </a>
                             <a href="javascript:;"
-                                onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . $deleteRoute . '\');"
+                                onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . route('backend.agents.destroy', $agent->id) . '\');"
                                 class="btn btn-sm btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
@@ -62,7 +69,7 @@ class AgentController extends Controller
             'phone' => 'required',
             'city' => 'required',
             'address' => 'required',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -77,7 +84,7 @@ class AgentController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil disimpan',
-                'redirect' => route('backend.agent.index')
+                'redirect' => route('backend.agents.index')
             ]);
         } else {
             return response()->json([
@@ -113,7 +120,7 @@ class AgentController extends Controller
             'phone' => 'required',
             'city' => 'required',
             'address' => 'required',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -128,7 +135,7 @@ class AgentController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil disimpan',
-                'redirect' => route('backend.agent.index')
+                'redirect' => route('backend.agents.index')
             ]);
         } else {
             return response()->json([

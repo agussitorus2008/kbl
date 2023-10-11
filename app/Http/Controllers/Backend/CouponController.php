@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Validator;
 
 class CouponController extends Controller
 {
+    private $messages;
+    public function __construct()
+    {
+        $this->messages = [
+            'user_id.required' => 'Nama harus diisi',
+            'user_id.exists' => 'Nama tidak ditemukan',
+            'discount.required' => 'Diskon harus diisi',
+            'discount.integer' => 'Diskon harus berupa angka',
+            'discount.min' => 'Diskon minimal 1',
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -25,17 +36,17 @@ class CouponController extends Controller
                 })
                 ->addColumn('action', function ($coupon) {
                     return '<div class="btn-group" role="group">
-                    <a href="javascript:;" onclick="load_input(\'' . route('backend.coupon.edit', $coupon->id) . '\');" class="btn btn-sm btn-warning">
+                    <a href="' . route('backend.coupons.edit', $coupon->id) . '" class="btn btn-sm btn-warning">
                         <i class="fas fa-solid fa-pen-to-square"></i>
                     </a>
-                    <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . route('backend.coupon.destroy', $coupon->id) . '\');" class="btn btn-sm btn-danger">
+                    <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . route('backend.coupons.destroy', $coupon->id) . '\');" class="btn btn-sm btn-danger">
                         <i class="fa fa-trash"></i>
                     </a>
                 </div>';
                 })
                 ->addColumn('used', function ($coupon) {
                     if ($coupon->used == 1) {
-                        return '<span class=" badge-success">Sudah Digunakan</span>';
+                        return '<span class="badge badge-success">Sudah Digunakan</span>';
                     } else {
                         return '<span class="badge badge-danger">Belum Digunakan</span>';
                     }
@@ -70,7 +81,7 @@ class CouponController extends Controller
         $validators = Validator::make($request->all(), [
             'user_id' => 'required|exists:users,id',
             'discount' => 'required|integer|min:1',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -88,6 +99,7 @@ class CouponController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Kupon berhasil ditambahkan',
+                'redirect' => route('backend.coupons.index')
             ]);
         } else {
             return response()->json([
@@ -121,7 +133,7 @@ class CouponController extends Controller
         $validators = Validator::make($request->all(), [
             'user_id' => 'required|exists:users,id',
             'discount' => 'required|integer|min:1',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -139,6 +151,7 @@ class CouponController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Kupon berhasil diubah',
+                'redirect' => route('backend.coupons.index')
             ]);
         } else {
             return response()->json([

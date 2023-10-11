@@ -67,7 +67,7 @@
                                         memiliki sudah memesan 5 atau lebih kursi.</div>
                                     <!--end::Label-->
                                     <!--begin::Select-->
-                                    <select name="user_id" class="form-select form-select-solid" data-control="select2"
+                                    <select name="user_id" class="form-select mb-2" data-control="select2"
                                         data-placeholder="Select option">
                                         <option value="">Select option</option>
                                         @foreach ($customers as $customer)
@@ -90,7 +90,7 @@
                                     <label class="required form-label">Discount</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" name="discount" class="form-control form-control-solid"
+                                    <input type="text" name="discount" class="form-control mb-2"
                                         placeholder="Enter discount" />
                                     <!--end::Input-->
                                     <!--begin::Description-->
@@ -106,7 +106,7 @@
                                     <label class="required form-label">Limit</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" name="limit" class="form-control form-control-solid"
+                                    <input type="text" name="limit" class="form-control mb-2"
                                         placeholder="Enter limit" />
                                     <!--end::Input-->
                                     <!--begin::Description-->

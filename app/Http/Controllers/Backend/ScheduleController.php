@@ -11,6 +11,22 @@ use Illuminate\Support\Facades\Validator;
 
 class ScheduleController extends Controller
 {
+    private $messages;
+    public function __construct()
+    {
+        $this->messages = [
+            'car_id.required' => 'Mobil harus diisi',
+            'car_id.exists' => 'Mobil tidak ditemukan',
+            'route.required' => 'Rute harus diisi',
+            'departure_time.required' => 'Waktu keberangkatan harus diisi',
+            'departure_time.date_format' => 'Waktu keberangkatan tidak valid',
+            'arrival_time.required' => 'Waktu kedatangan harus diisi',
+            'arrival_time.date_format' => 'Waktu kedatangan tidak valid',
+            'price.required' => 'Harga harus diisi',
+            'price.integer' => 'Harga harus berupa angka',
+            'price.min' => 'Harga minimal 1',
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -24,17 +40,14 @@ class ScheduleController extends Controller
                     return $schedule->car->driver->name;
                 })
                 ->addColumn('action', function ($schedule) {
-                    $editRoute = route('backend.schedule.edit', $schedule->id);
-                    $deleteRoute = route('backend.schedule.destroy', $schedule->id);
-
                     return '
                         <div class="btn-group">
-                            <a href="javascript:;" onclick="load_input(\'' . $editRoute . '\');"
+                            <a href="' . route('backend.schedules.edit', $schedule->id) . '"
                                 class="btn btn-sm btn-warning">
                                 <i class="fas fa-solid fa-pen-to-square"></i>
                             </a>
                             <a href="javascript:;"
-                                onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . $deleteRoute . '\');"
+                                onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . route('backend.schedules.destroy', $schedule->id) . '\');"
                                 class="btn btn-sm btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
@@ -51,7 +64,16 @@ class ScheduleController extends Controller
 
                     return $routeMap[$schedule->route] ?? '';
                 })
-                ->rawColumns(['action', 'route'])
+                ->addColumn('departure_time', function ($schedule) {
+                    return date('d-m-Y H:i', strtotime($schedule->departure_time));
+                })
+                ->addColumn('arrival_time', function ($schedule) {
+                    return date('d-m-Y H:i', strtotime($schedule->arrival_time));
+                })
+                ->addColumn('price', function ($schedule) {
+                    return 'Rp ' . number_format($schedule->price, 0, ',', '.');
+                })
+                ->rawColumns(['action', 'route', 'departure_time', 'arrival_time', 'price'])
                 ->make(true);
         }
 
@@ -79,7 +101,7 @@ class ScheduleController extends Controller
             'departure_time' => 'required|date_format:Y-m-d H:i:s',
             'arrival_time' => 'required|date_format:Y-m-d H:i:s',
             'price' => 'required|integer|min:1',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -89,20 +111,26 @@ class ScheduleController extends Controller
         }
 
         $car = Car::find($request->car_id);
-
-        Schedule::create([
+        $schedule = Schedule::create([
             'car_id' => $request->car_id,
             'route' => $request->route,
             'departure_time' => $request->departure_time,
             'arrival_time' => $request->arrival_time,
             'price' => $request->price,
-            'available_seats' => $car->capacity,
         ]);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data berhasil ditambahkan',
-        ]);
+        if ($schedule) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil ditambahkan',
+                'redirect' => route('backend.schedules.index'),
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data gagal ditambahkan',
+            ]);
+        }
     }
 
     /**
@@ -133,7 +161,7 @@ class ScheduleController extends Controller
             'departure_time' => 'required|date_format:Y-m-d H:i:s',
             'arrival_time' => 'required|date_format:Y-m-d H:i:s',
             'price' => 'required|integer|min:1',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -150,7 +178,6 @@ class ScheduleController extends Controller
             'departure_time' => $request->departure_time,
             'arrival_time' => $request->arrival_time,
             'price' => $request->price,
-            'available_seats' => $car->capacity,
         ]);
 
         return response()->json([

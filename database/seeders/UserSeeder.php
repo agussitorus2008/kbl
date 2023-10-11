@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,13 +22,12 @@ class UserSeeder extends Seeder
 
         $admin->assignRole('admin');
 
-        $customer = \App\Models\User::create([
-            'name' => 'Customer',
-            'email' => 'customer@gmail.com',
-            'phone' => '081234567891',
-            'password' => bcrypt('password'),
-        ]);
-
-        $customer->assignRole('customer');
+        // create user by factory and assign role as customer
+        \App\Models\User::factory()
+            ->count(20)
+            ->create()
+            ->each(function ($user) {
+                $user->assignRole('customer');
+            });
     }
 }

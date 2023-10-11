@@ -12,6 +12,31 @@ use Illuminate\Support\Facades\Validator;
 
 class CarController extends Controller
 {
+    private $messages;
+    public function __construct()
+    {
+        $this->messages = [
+            'driver_id.required' => 'Supir harus dipilih',
+            'driver_id.exists' => 'Supir tidak ditemukan',
+            'driver_id.unique' => 'Supir sudah memiliki mobil',
+            'type.required' => 'Tipe mobil harus dipilih',
+            'capacity.required' => 'Kapasitas mobil harus diisi',
+            'capacity.integer' => 'Kapasitas mobil harus berupa angka',
+            'capacity.min' => 'Kapasitas mobil minimal 1',
+            'car_number.required' => 'Nomor mobil harus diisi',
+            'car_number.string' => 'Nomor mobil harus berupa string',
+            'car_number.max' => 'Nomor mobil maksimal 255 karakter',
+            'car_number.unique' => 'Nomor mobil sudah digunakan',
+            'plate_number.required' => 'Nomor plat mobil harus diisi',
+            'plate_number.string' => 'Nomor plat mobil harus berupa string',
+            'plate_number.max' => 'Nomor plat mobil maksimal 255 karakter',
+            'plate_number.unique' => 'Nomor plat mobil sudah digunakan',
+            'image.required' => 'Gambar mobil harus diisi',
+            'image.image' => 'Gambar mobil harus berupa gambar',
+            'image.mimes' => 'Gambar mobil harus berupa jpeg, png, jpg, gif, svg',
+            'image.max' => 'Gambar mobil maksimal 2048 KB',
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -27,10 +52,10 @@ class CarController extends Controller
                 ->addColumn('action', function ($cars) {
                     return '
                     <div class="btn-group" role="group">
-                    <a href="javascript:;" onclick="load_input(\'' . route('backend.car.edit', $cars->id) . '\');" class="btn btn-sm btn-warning">
+                    <a href="' . route('backend.cars.edit', $cars->id) . '" class="btn btn-sm btn-warning">
                         <i class="fas fa-solid fa-pen-to-square"></i>
                     </a>
-                    <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . route('backend.car.destroy', $cars->id) . '\');" class="btn btn-sm btn-danger">
+                    <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'DELETE\',\'' . route('backend.cars.destroy', $cars->id) . '\');" class="btn btn-sm btn-danger">
                         <i class="fa fa-trash"></i>
                     </a>
                     </div>';
@@ -62,7 +87,7 @@ class CarController extends Controller
             'car_number' => 'required|string|max:255|unique:cars',
             'plate_number' => 'required|string|max:255|unique:cars',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -93,7 +118,7 @@ class CarController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil ditambahkan',
-                'redirect' => route('backend.car.index'),
+                'redirect' => route('backend.cars.index'),
             ]);
         } else {
             return response()->json([
@@ -132,7 +157,7 @@ class CarController extends Controller
             'car_number' => 'required|string|max:255|unique:cars,car_number,' . $car->id,
             'plate_number' => 'required|string|max:255|unique:cars,plate_number,' . $car->id,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ], $this->messages);
 
         if ($validators->fails()) {
             return response()->json([
@@ -166,7 +191,7 @@ class CarController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil diubah',
-                'redirect' => route('backend.car.index'),
+                'redirect' => route('backend.cars.index'),
             ]);
         } else {
             return response()->json([
