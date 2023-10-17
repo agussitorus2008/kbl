@@ -191,6 +191,23 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
+                    <a class="menu-link {{ request()->is('backend/orders/*') || request()->is('backend/orders') ? 'active' : '' }}"
+                        href="{{ route('backend.orders.index') }}">
+                        <span class="menu-icon">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                            <span class="svg-icon svg-icon-2">
+                                <i class="fas fa-shopping-cart fs-2"></i>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </span>
+                        <span class="menu-title">Orders</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
+                <!--begin:Menu item-->
+                <div class="menu-item">
+                    <!--begin:Menu link-->
                     <a class="menu-link {{ request()->is('backend/coupons/*') || request()->is('backend/coupons') ? 'active' : '' }}"
                         href="{{ route('backend.coupons.index') }}">
                         <span class="menu-icon">
