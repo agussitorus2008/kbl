@@ -86,7 +86,7 @@
                                     <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center my-1">
                                         <!--begin::Bullet-->
-                                        <div class="bullet w-8px h-6px rounded-2 me-3" style="background-color: #E4E6EF">
+                                        <div class="bullet w-8px h-6px rounded-2 bg-secodary me-3">
                                         </div>
                                         <!--end::Bullet-->
                                         <!--begin::Label-->
@@ -396,14 +396,16 @@
                                 <!--begin::Tap pane-->
                                 <div class="tab-pane fade active show" id="kt_charts_widget_10_tab_content_1">
                                     <!--begin::Chart-->
-                                    <div id="kt_charts_widget_10_chart_1" class="min-h-auto" style="height: 270px"></div>
+                                    <div id="kt_charts_widget_10_chart_1" class="min-h-auto"
+                                        style="height: 270px;overflow: auto;"></div>
                                     <!--end::Chart-->
                                 </div>
                                 <!--end::Tap pane-->
                                 <!--begin::Tap pane-->
                                 <div class="tab-pane fade" id="kt_charts_widget_10_tab_content_2">
                                     <!--begin::Chart-->
-                                    <div id="kt_charts_widget_10_chart_2" class="min-h-auto" style="height: 270px"></div>
+                                    <div id="kt_charts_widget_10_chart_2" class="min-h-auto"
+                                        style="height: 270px;overflow: auto;"></div>
                                     <!--end::Chart-->
                                 </div>
                                 <!--end::Tap pane-->
@@ -520,620 +522,529 @@
             </div>
         </div>
     </div>
-@section('custom_js')
-    <script>
-        $(document).ready(function() {
-            $('#schedules_table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "{{ route('backend.schedules.index') }}",
-                },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        defaultContent: '',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'driver_name',
-                        name: 'driver_name',
-                    },
-                    {
-                        data: 'route',
-                        name: 'route'
-                    },
-                    {
-                        data: 'departure_time',
-                        name: 'departure_time'
-                    },
-                    {
-                        data: 'price',
-                        name: 'price'
-                    },
-                ],
-            });
-
-            $('#orders_table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "{{ route('backend.orders.index') }}",
-                },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        defaultContent: '',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'code',
-                        name: 'code'
-                    },
-                    {
-                        data: 'departure_time',
-                        name: 'departure_time'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status'
-                    }
-                ],
-            });
-
-            $('#schedules_table').on('order.dt search.dt', function() {
-                $('#schedules_table').DataTable().column(0, {
-                    search: 'applied',
-                    order: 'applied'
-                }).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            });
-
-            $('#orders_table').on('order.dt search.dt', function() {
-                $('#orders_table').DataTable().column(0, {
-                    search: 'applied',
-                    order: 'applied'
-                }).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            });
-
-            $('input[name="orders"]').on('keyup', function() {
-                $('#orders_table').DataTable().search($(this).val()).draw();
-            });
-
-            $('select[name="status"]').on('change', function() {
-                $('#orders_table').DataTable().columns(4).search($(this).val()).draw();
-            });
-
-            $('input[name="schedules"]').on('keyup', function() {
-                $('#schedules_table').DataTable().search($(this).val()).draw();
-            });
-
-        });
-    </script>
-@endsection
 @endsection
 @push('custom-scripts')
-<script>
-    // get name of this month
-    var thisMonth = new Date().toLocaleString('default', {
-        month: 'long'
-    });
-    var KTCardsWidget6 = {
-        init: function() {
-            ! function() {
-                var e = document.getElementById("averageDailyOrderChart");
-                if (e) {
-                    var t = parseInt(KTUtil.css(e, "height")),
-                        a = KTUtil.getCssVariableValue("--bs-gray-500"),
-                        l = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
-                        r = KTUtil.getCssVariableValue("--bs-primary"),
-                        o = KTUtil.getCssVariableValue("--bs-gray-300"),
-                        i = new ApexCharts(e, {
-                            series: [{
-                                name: "Sales",
-                                data: @json($ordersSevenDays)
-                            }],
-                            chart: {
-                                fontFamily: "inherit",
-                                type: "bar",
-                                height: t,
-                                toolbar: {
+    <script>
+        // get name of this month
+        var thisMonth = new Date().toLocaleString('default', {
+            month: 'long'
+        });
+        var KTCardsWidget6 = {
+            init: function() {
+                ! function() {
+                    var e = document.getElementById("averageDailyOrderChart");
+                    if (e) {
+                        var t = parseInt(KTUtil.css(e, "height")),
+                            a = KTUtil.getCssVariableValue("--bs-gray-500"),
+                            l = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
+                            r = KTUtil.getCssVariableValue("--bs-primary"),
+                            o = KTUtil.getCssVariableValue("--bs-gray-300"),
+                            i = new ApexCharts(e, {
+                                series: [{
+                                    name: "Sales",
+                                    data: @json($ordersSevenDays)
+                                }],
+                                chart: {
+                                    fontFamily: "inherit",
+                                    type: "bar",
+                                    height: t,
+                                    toolbar: {
+                                        show: !1
+                                    },
+                                    sparkline: {
+                                        enabled: !0
+                                    }
+                                },
+                                plotOptions: {
+                                    bar: {
+                                        horizontal: !1,
+                                        columnWidth: ["55%"],
+                                        borderRadius: 6
+                                    }
+                                },
+                                legend: {
                                     show: !1
                                 },
-                                sparkline: {
-                                    enabled: !0
-                                }
-                            },
-                            plotOptions: {
-                                bar: {
-                                    horizontal: !1,
-                                    columnWidth: ["55%"],
-                                    borderRadius: 6
-                                }
-                            },
-                            legend: {
-                                show: !1
-                            },
-                            dataLabels: {
-                                enabled: !1
-                            },
-                            stroke: {
-                                show: !0,
-                                width: 9,
-                                colors: ["transparent"]
-                            },
-                            xaxis: {
-                                axisBorder: {
-                                    show: !1
+                                dataLabels: {
+                                    enabled: !1
                                 },
-                                axisTicks: {
-                                    show: !1,
-                                    tickPlacement: "between"
+                                stroke: {
+                                    show: !0,
+                                    width: 9,
+                                    colors: ["transparent"]
                                 },
-                                labels: {
-                                    show: !1,
-                                    style: {
-                                        colors: a,
-                                        fontSize: "12px"
+                                xaxis: {
+                                    axisBorder: {
+                                        show: !1
+                                    },
+                                    axisTicks: {
+                                        show: !1,
+                                        tickPlacement: "between"
+                                    },
+                                    labels: {
+                                        show: !1,
+                                        style: {
+                                            colors: a,
+                                            fontSize: "12px"
+                                        }
+                                    },
+                                    crosshairs: {
+                                        show: !1
                                     }
                                 },
-                                crosshairs: {
-                                    show: !1
-                                }
-                            },
-                            yaxis: {
-                                labels: {
-                                    show: !1,
-                                    style: {
-                                        colors: a,
-                                        fontSize: "12px"
-                                    }
-                                }
-                            },
-                            fill: {
-                                type: "solid"
-                            },
-                            states: {
-                                normal: {
-                                    filter: {
-                                        type: "none",
-                                        value: 0
-                                    }
-                                },
-                                hover: {
-                                    filter: {
-                                        type: "none",
-                                        value: 0
-                                    }
-                                },
-                                active: {
-                                    allowMultipleDataPointsSelection: !1,
-                                    filter: {
-                                        type: "none",
-                                        value: 0
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                style: {
-                                    fontSize: "12px"
-                                },
-                                x: {
-                                    formatter: function(e) {
-                                        return thisMonth + " " + e + "th"
-                                    }
-                                },
-                                y: {
-                                    formatter: function(e) {
-                                        return e + "%"
-                                    }
-                                }
-                            },
-                            colors: [r, o],
-                            grid: {
-                                padding: {
-                                    left: 10,
-                                    right: 10
-                                },
-                                borderColor: l,
-                                strokeDashArray: 4,
                                 yaxis: {
-                                    lines: {
-                                        show: !0
-                                    }
-                                }
-                            }
-                        });
-                    setTimeout((function() {
-                        i.render()
-                    }), 300)
-                }
-            }()
-        }
-    };
-    "undefined" != typeof module && (module.exports = KTCardsWidget6), KTUtil.onDOMContentLoaded((function() {
-        KTCardsWidget6.init()
-    }));
-
-    var KTChartsWidget3 = function() {
-        var e = {
-                self: null,
-                rendered: !1
-            },
-            t = function(e) {
-                var t = document.getElementById("kt_charts_widget_3");
-                if (t) {
-                    var a = parseInt(KTUtil.css(t, "height")),
-                        l = KTUtil.getCssVariableValue("--bs-gray-500"),
-                        r = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
-                        o = KTUtil.getCssVariableValue("--bs-success"),
-                        i = {
-                            series: [{
-                                name: "Sales",
-                                data: @json($data)
-                            }],
-                            chart: {
-                                fontFamily: "inherit",
-                                type: "area",
-                                height: a,
-                                toolbar: {
-                                    show: !1
-                                }
-                            },
-                            plotOptions: {},
-                            legend: {
-                                show: !1
-                            },
-                            dataLabels: {
-                                enabled: !1
-                            },
-                            fill: {
-                                type: "gradient",
-                                gradient: {
-                                    shadeIntensity: 1,
-                                    opacityFrom: .4,
-                                    opacityTo: 0,
-                                    stops: [0, 80, 100]
-                                }
-                            },
-                            stroke: {
-                                curve: "smooth",
-                                show: !0,
-                                width: 3,
-                                colors: [o]
-                            },
-                            xaxis: {
-                                categories: @json($categories),
-                                axisBorder: {
-                                    show: !1
-                                },
-                                axisTicks: {
-                                    show: !1
-                                },
-                                tickAmount: 6,
-                                labels: {
-                                    rotate: 0,
-                                    rotateAlways: !0,
-                                    style: {
-                                        colors: l,
-                                        fontSize: "12px"
+                                    labels: {
+                                        show: !1,
+                                        style: {
+                                            colors: a,
+                                            fontSize: "12px"
+                                        }
                                     }
                                 },
-                                crosshairs: {
-                                    position: "front",
-                                    stroke: {
-                                        color: o,
-                                        width: 1,
-                                        dashArray: 3
+                                fill: {
+                                    type: "solid"
+                                },
+                                states: {
+                                    normal: {
+                                        filter: {
+                                            type: "none",
+                                            value: 0
+                                        }
+                                    },
+                                    hover: {
+                                        filter: {
+                                            type: "none",
+                                            value: 0
+                                        }
+                                    },
+                                    active: {
+                                        allowMultipleDataPointsSelection: !1,
+                                        filter: {
+                                            type: "none",
+                                            value: 0
+                                        }
                                     }
                                 },
                                 tooltip: {
-                                    enabled: !0,
-                                    formatter: void 0,
-                                    offsetY: 0,
                                     style: {
-                                        fontSize: "12px"
-                                    }
-                                }
-                            },
-                            yaxis: {
-                                tickAmount: 4,
-                                max: @json($max),
-                                min: @json($min),
-                                labels: {
-                                    style: {
-                                        colors: l,
                                         fontSize: "12px"
                                     },
-                                    formatter: function(e) {
-                                        return "Rp. " + e + "K"
-                                    }
-                                }
-                            },
-                            states: {
-                                normal: {
-                                    filter: {
-                                        type: "none",
-                                        value: 0
-                                    }
-                                },
-                                hover: {
-                                    filter: {
-                                        type: "none",
-                                        value: 0
+                                    x: {
+                                        formatter: function(e) {
+                                            return thisMonth + " " + e + "th"
+                                        }
+                                    },
+                                    y: {
+                                        formatter: function(e) {
+                                            return e + "%"
+                                        }
                                     }
                                 },
-                                active: {
-                                    allowMultipleDataPointsSelection: !1,
-                                    filter: {
-                                        type: "none",
-                                        value: 0
+                                colors: [r, o],
+                                grid: {
+                                    padding: {
+                                        left: 10,
+                                        right: 10
+                                    },
+                                    borderColor: l,
+                                    strokeDashArray: 4,
+                                    yaxis: {
+                                        lines: {
+                                            show: !0
+                                        }
                                     }
                                 }
-                            },
-                            tooltip: {
-                                style: {
-                                    fontSize: "12px"
-                                },
-                                y: {
-                                    formatter: function(e) {
-                                        return "Rp. " + e + "K"
-                                    }
-                                }
-                            },
-                            colors: [KTUtil.getCssVariableValue("--bs-success")],
-                            grid: {
-                                borderColor: r,
-                                strokeDashArray: 4,
-                                yaxis: {
-                                    lines: {
-                                        show: !0
-                                    }
-                                }
-                            },
-                            markers: {
-                                strokeColor: o,
-                                strokeWidth: 3
-                            }
-                        };
-                    e.self = new ApexCharts(t, i), setTimeout((function() {
-                        e.self.render(), e.rendered = !0
-                    }), 200)
-                }
-            };
-        return {
-            init: function() {
-                t(e), KTThemeMode.on("kt.thememode.change", (function() {
-                    e.rendered && e.self.destroy(), t(e)
-                }))
+                            });
+                        setTimeout((function() {
+                            i.render()
+                        }), 300)
+                    }
+                }()
             }
-        }
-    }();
-    "undefined" != typeof module && (module.exports = KTChartsWidget3), KTUtil.onDOMContentLoaded((function() {
-        KTChartsWidget3.init()
-    }));
-
-    var KTCardsWidget10 = {
-        init: function() {
-            ! function() {
-                var e = document.getElementById("kt_card_widget_10_chart");
-                if (e) {
-                    var t = {
-                        size: e.getAttribute("data-kt-size") ? parseInt(e.getAttribute("data-kt-size")) :
-                            70,
-                        lineWidth: e.getAttribute("data-kt-line") ? parseInt(e.getAttribute(
-                            "data-kt-line")) : 11,
-                        rotate: e.getAttribute("data-kt-rotate") ? parseInt(e.getAttribute(
-                            "data-kt-rotate")) : 145
-                    };
-                    var a = document.createElement("canvas");
-                    var l = document.createElement("span");
-                    "undefined" != typeof G_vmlCanvasManager && G_vmlCanvasManager.initElement(a);
-                    var r = a.getContext("2d");
-                    a.width = a.height = t.size;
-                    e.appendChild(l);
-                    e.appendChild(a);
-                    r.translate(t.size / 2, t.size / 2);
-                    r.rotate((t.rotate / 180 - .5) * Math.PI);
-                    var o = (t.size - t.lineWidth) / 2;
-                    var i = function(e, t, a) {
-                        a = Math.min(Math.max(0, a || 1), 1);
-                        r.beginPath();
-                        r.arc(0, 0, o, 0, 2 * Math.PI * a, !1);
-                        r.strokeStyle = e;
-                        r.lineCap = "round";
-                        r.lineWidth = t;
-                        r.stroke();
-                    };
-
-                    // Misalnya, Anda dapat mengganti ini dengan data dari Laravel
-                    var data = @json($percentages);
-                    i("#E4E6EF", t.lineWidth, data[0] / 100);
-                    i(KTUtil.getCssVariableValue("--bs-primary"), t.lineWidth, data[1] / 100);
-                }
-            }()
-        }
-    };
-
-
-    "undefined" != typeof module && (module.exports = KTCardsWidget10), KTUtil.onDOMContentLoaded((function() {
-        KTCardsWidget10.init()
-    }));
-
-    var KTChartsWidget10 = function() {
-        var chart1 = {
-            self: null,
-            rendered: false
         };
+        "undefined" != typeof module && (module.exports = KTCardsWidget6), KTUtil.onDOMContentLoaded((function() {
+            KTCardsWidget6.init()
+        }));
 
-        var chart2 = {
-            self: null,
-            rendered: false
-        };
-
-        var initializeChart = function(chart, chartId, data, categories, render) {
-            var element = document.querySelector(chartId);
-            if (element) {
-                var height = parseInt(KTUtil.css(element, "height"));
-                var grayColor = KTUtil.getCssVariableValue("--bs-gray-900");
-                var borderColor = KTUtil.getCssVariableValue("--bs-border-dashed-color");
-
-                var chartOptions = {
-                    series: [{
-                        name: "Orders",
-                        data: data
-                    }],
-                    chart: {
-                        fontFamily: "inherit",
-                        type: "bar",
-                        height: height,
-                        toolbar: {
-                            show: false
-                        }
-                    },
-                    plotOptions: {
-                        bar: {
-                            horizontal: false,
-                            columnWidth: ["22%"],
-                            borderRadius: 5,
-                            dataLabels: {
-                                position: "top"
-                            },
-                            startingShape: "flat"
-                        }
-                    },
-                    legend: {
-                        show: false
-                    },
-                    dataLabels: {
-                        enabled: true,
-                        offsetY: -30,
-                        style: {
-                            fontSize: "13px",
-                            colors: [grayColor]
-                        },
-                        formatter: function(e) {
-                            return e
-                        }
-                    },
-                    stroke: {
-                        show: true,
-                        width: 2,
-                        colors: ["transparent"]
-                    },
-                    xaxis: {
-                        categories: categories,
-                        axisBorder: {
-                            show: false
-                        },
-                        axisTicks: {
-                            show: false
-                        },
-                        labels: {
-                            style: {
-                                colors: KTUtil.getCssVariableValue("--bs-gray-500"),
-                                fontSize: "13px"
-                            }
-                        },
-                        crosshairs: {
-                            fill: {
-                                gradient: {
-                                    opacityFrom: 0,
-                                    opacityTo: 0
+        var KTChartsWidget3 = function() {
+            var e = {
+                    self: null,
+                    rendered: !1
+                },
+                t = function(e) {
+                    var t = document.getElementById("kt_charts_widget_3");
+                    if (t) {
+                        var a = parseInt(KTUtil.css(t, "height")),
+                            l = KTUtil.getCssVariableValue("--bs-gray-500"),
+                            r = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
+                            o = KTUtil.getCssVariableValue("--bs-success"),
+                            i = {
+                                series: [{
+                                    name: "Sales",
+                                    data: @json($data)
+                                }],
+                                chart: {
+                                    fontFamily: "inherit",
+                                    type: "area",
+                                    height: a,
+                                    toolbar: {
+                                        show: !1
+                                    }
+                                },
+                                plotOptions: {},
+                                legend: {
+                                    show: !1
+                                },
+                                dataLabels: {
+                                    enabled: !1
+                                },
+                                fill: {
+                                    type: "gradient",
+                                    gradient: {
+                                        shadeIntensity: 1,
+                                        opacityFrom: .4,
+                                        opacityTo: 0,
+                                        stops: [0, 80, 100]
+                                    }
+                                },
+                                stroke: {
+                                    curve: "smooth",
+                                    show: !0,
+                                    width: 3,
+                                    colors: [o]
+                                },
+                                xaxis: {
+                                    categories: @json($categories),
+                                    tickAmount: 7,
+                                    axisBorder: {
+                                        show: !1
+                                    },
+                                    axisTicks: {
+                                        show: !1
+                                    },
+                                    tickAmount: 6,
+                                    labels: {
+                                        rotate: 0,
+                                        rotateAlways: !0,
+                                        style: {
+                                            colors: l,
+                                            fontSize: "12px"
+                                        }
+                                    },
+                                    crosshairs: {
+                                        position: "front",
+                                        stroke: {
+                                            color: o,
+                                            width: 1,
+                                            dashArray: 3
+                                        }
+                                    },
+                                    tooltip: {
+                                        enabled: !0,
+                                        formatter: void 0,
+                                        offsetY: 0,
+                                        style: {
+                                            fontSize: "12px"
+                                        }
+                                    }
+                                },
+                                yaxis: {
+                                    tickAmount: 4,
+                                    max: @json($max),
+                                    min: @json($min),
+                                    labels: {
+                                        style: {
+                                            colors: l,
+                                            fontSize: "12px"
+                                        },
+                                        formatter: function(e) {
+                                            return "Rp. " + e + "K"
+                                        }
+                                    }
+                                },
+                                states: {
+                                    normal: {
+                                        filter: {
+                                            type: "none",
+                                            value: 0
+                                        }
+                                    },
+                                    hover: {
+                                        filter: {
+                                            type: "none",
+                                            value: 0
+                                        }
+                                    },
+                                    active: {
+                                        allowMultipleDataPointsSelection: !1,
+                                        filter: {
+                                            type: "none",
+                                            value: 0
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    style: {
+                                        fontSize: "12px"
+                                    },
+                                    y: {
+                                        formatter: function(e) {
+                                            return "Rp. " + e + "K"
+                                        }
+                                    }
+                                },
+                                colors: [KTUtil.getCssVariableValue("--bs-success")],
+                                grid: {
+                                    borderColor: r,
+                                    strokeDashArray: 4,
+                                    yaxis: {
+                                        lines: {
+                                            show: !0
+                                        }
+                                    }
+                                },
+                                markers: {
+                                    strokeColor: o,
+                                    strokeWidth: 3
                                 }
-                            }
-                        }
-                    },
-                    yaxis: {
-                        labels: {
-                            style: {
-                                colors: KTUtil.getCssVariableValue("--bs-gray-500"),
-                                fontSize: "13px"
-                            },
-                            formatter: function(e) {
-                                return parseInt(e)
-                            }
-                        }
-                    },
-                    fill: {
-                        opacity: 1
-                    },
-                    states: {
-                        normal: {
-                            filter: {
-                                type: "none",
-                                value: 0
-                            }
-                        },
-                        hover: {
-                            filter: {
-                                type: "none",
-                                value: 0
-                            }
-                        },
-                        active: {
-                            allowMultipleDataPointsSelection: false,
-                            filter: {
-                                type: "none",
-                                value: 0
-                            }
-                        }
-                    },
-                    tooltip: {
-                        style: {
-                            fontSize: "12px"
-                        },
-                        y: {
-                            formatter: function(e) {
-                                return +e + "K"
-                            }
-                        }
-                    },
-                    colors: [KTUtil.getCssVariableValue("--bs-primary"), KTUtil.getCssVariableValue(
-                        "--bs-primary-light")],
-                    grid: {
-                        borderColor: borderColor,
-                        strokeDashArray: 4,
-                        yaxis: {
-                            lines: {
-                                show: true
-                            }
-                        }
+                            };
+                        e.self = new ApexCharts(t, i), setTimeout((function() {
+                            e.self.render(), e.rendered = !0
+                        }), 200)
                     }
                 };
-
-                chart.self = new ApexCharts(element, chartOptions);
-
-                if (render) {
-                    setTimeout(function() {
-                        chart.self.render();
-                        chart.rendered = true;
-                    }, 200);
+            return {
+                init: function() {
+                    t(e), KTThemeMode.on("kt.thememode.change", (function() {
+                        e.rendered && e.self.destroy(), t(e)
+                    }))
                 }
+            }
+        }();
+        "undefined" != typeof module && (module.exports = KTChartsWidget3), KTUtil.onDOMContentLoaded((function() {
+            KTChartsWidget3.init()
+        }));
+
+        var KTCardsWidget10 = {
+            init: function() {
+                ! function() {
+                    var e = document.getElementById("kt_card_widget_10_chart");
+                    if (e) {
+                        var t = {
+                            size: e.getAttribute("data-kt-size") ? parseInt(e.getAttribute("data-kt-size")) :
+                                70,
+                            lineWidth: e.getAttribute("data-kt-line") ? parseInt(e.getAttribute(
+                                "data-kt-line")) : 11,
+                            rotate: e.getAttribute("data-kt-rotate") ? parseInt(e.getAttribute(
+                                "data-kt-rotate")) : 145
+                        };
+                        var a = document.createElement("canvas");
+                        var l = document.createElement("span");
+                        "undefined" != typeof G_vmlCanvasManager && G_vmlCanvasManager.initElement(a);
+                        var r = a.getContext("2d");
+                        a.width = a.height = t.size;
+                        e.appendChild(l);
+                        e.appendChild(a);
+                        r.translate(t.size / 2, t.size / 2);
+                        r.rotate((t.rotate / 180 - .5) * Math.PI);
+                        var o = (t.size - t.lineWidth) / 2;
+                        var i = function(e, t, a) {
+                            a = Math.min(Math.max(0, a || 1), 1);
+                            r.beginPath();
+                            r.arc(0, 0, o, 0, 2 * Math.PI * a, !1);
+                            r.strokeStyle = e;
+                            r.lineCap = "round";
+                            r.lineWidth = t;
+                            r.stroke();
+                        };
+
+                        // Misalnya, Anda dapat mengganti ini dengan data dari Laravel
+                        var data = @json($percentages);
+                        i(KTUtil.getCssVariableValue("--bs-secondary"), t.lineWidth, 100 / 100);
+                        i(KTUtil.getCssVariableValue("--bs-primary"), t.lineWidth, data[1] / 100);
+                    }
+                }()
             }
         };
 
-        return {
-            init: function(data1, categories1, data2, categories2) {
-                initializeChart(chart1, "#kt_charts_widget_10_chart_1", @json($executiveSevenDays),
-                    @json($sevenDays), true);
-                initializeChart(chart2,
-                    "#kt_charts_widget_10_chart_2", @json($nonExecutiveSevenDays),
-                    @json($sevenDays), true);
-            }
-        }
-    }();
 
-    "undefined" != typeof module && (module.exports = KTChartsWidget10),
-        KTUtil.onDOMContentLoaded((function() {
-            KTChartsWidget10.init()
+        "undefined" != typeof module && (module.exports = KTCardsWidget10), KTUtil.onDOMContentLoaded((function() {
+            KTCardsWidget10.init()
         }));
-</script>
+
+        var KTChartsWidget10 = function() {
+            var chart1 = {
+                self: null,
+                rendered: false
+            };
+
+            var chart2 = {
+                self: null,
+                rendered: false
+            };
+
+            var initializeChart = function(chart, chartId, data, categories, render) {
+                var element = document.querySelector(chartId);
+                if (element) {
+                    var height = parseInt(KTUtil.css(element, "height"));
+                    var grayColor = KTUtil.getCssVariableValue("--bs-gray-900");
+                    var borderColor = KTUtil.getCssVariableValue("--bs-border-dashed-color");
+
+                    var chartOptions = {
+                        series: [{
+                            name: "Orders",
+                            data: data
+                        }],
+                        chart: {
+                            fontFamily: "inherit",
+                            type: "bar",
+                            height: height,
+                            toolbar: {
+                                show: false
+                            },
+                            width: data.length * 100,
+                            zoom: {
+                                enabled: true,
+                                type: "x",
+                                autoScaleYaxis: true
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false,
+                                columnWidth: ["22%"],
+                                borderRadius: 5,
+                                dataLabels: {
+                                    position: "top"
+                                },
+                                startingShape: "flat"
+                            }
+                        },
+                        legend: {
+                            show: false
+                        },
+                        dataLabels: {
+                            enabled: true,
+                            offsetY: -30,
+                            style: {
+                                fontSize: "13px",
+                                colors: [grayColor]
+                            },
+                            formatter: function(e) {
+                                return e
+                            }
+                        },
+                        stroke: {
+                            show: true,
+                            width: 2,
+                            colors: ["transparent"]
+                        },
+                        xaxis: {
+                            categories: categories,
+                            axisBorder: {
+                                show: false
+                            },
+                            axisTicks: {
+                                show: false
+                            },
+                            labels: {
+                                style: {
+                                    colors: KTUtil.getCssVariableValue("--bs-gray-500"),
+                                    fontSize: "13px"
+                                }
+                            },
+                            crosshairs: {
+                                fill: {
+                                    gradient: {
+                                        opacityFrom: 0,
+                                        opacityTo: 0
+                                    }
+                                }
+                            }
+                        },
+                        yaxis: {
+                            labels: {
+                                style: {
+                                    colors: KTUtil.getCssVariableValue("--bs-gray-500"),
+                                    fontSize: "13px"
+                                },
+                                formatter: function(e) {
+                                    return parseInt(e)
+                                }
+                            }
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        states: {
+                            normal: {
+                                filter: {
+                                    type: "none",
+                                    value: 0
+                                }
+                            },
+                            hover: {
+                                filter: {
+                                    type: "none",
+                                    value: 0
+                                }
+                            },
+                            active: {
+                                allowMultipleDataPointsSelection: false,
+                                filter: {
+                                    type: "none",
+                                    value: 0
+                                }
+                            }
+                        },
+                        tooltip: {
+                            style: {
+                                fontSize: "12px"
+                            },
+                            y: {
+                                formatter: function(e) {
+                                    return +e + "K"
+                                }
+                            }
+                        },
+                        colors: [KTUtil.getCssVariableValue("--bs-primary"), KTUtil.getCssVariableValue(
+                            "--bs-primary-light")],
+                        grid: {
+                            borderColor: borderColor,
+                            strokeDashArray: 4,
+                            yaxis: {
+                                lines: {
+                                    show: true
+                                }
+                            }
+                        },
+                    };
+
+                    chart.self = new ApexCharts(element, chartOptions);
+
+                    if (render) {
+                        setTimeout(function() {
+                            chart.self.render();
+                            chart.rendered = true;
+                        }, 200);
+                    }
+                }
+            };
+
+            return {
+                init: function(data1, categories1, data2, categories2) {
+                    initializeChart(chart1, "#kt_charts_widget_10_chart_1", @json($executiveData),
+                        @json($executiveLabels), true);
+                    initializeChart(chart2,
+                        "#kt_charts_widget_10_chart_2", @json($nonExecutiveData),
+                        @json($nonExecutiveLabels), true);
+                }
+            }
+        }();
+
+        "undefined" != typeof module && (module.exports = KTChartsWidget10),
+            KTUtil.onDOMContentLoaded((function() {
+                KTChartsWidget10.init()
+            }));
+    </script>
 @endpush

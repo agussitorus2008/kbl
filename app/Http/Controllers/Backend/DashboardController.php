@@ -42,8 +42,11 @@ class DashboardController extends Controller
         // Mengambil data banyaknya order dalam 7 hari terakhir
         $ordersSevenDays = [];
         for ($i = 0; $i < 7; $i++) {
-            $ordersSevenDays[$i] = $orders->where('created_at', '>=', now()->subDays(7 - $i))->where('created_at', '<=', now()->subDays(6 - $i))->count();
+            array_push($ordersSevenDays, $orders->where('created_at', '>=', now()->subDays($i + 1)->startOfDay())
+                ->where('created_at', '<=', now()->subDays($i + 1)->endOfDay())
+                ->count());
         }
+        // dd($ordersSevenDays);
 
         $categories = $orders->pluck('created_at')->map(function ($date) {
             return $date->format('M d');
@@ -56,22 +59,38 @@ class DashboardController extends Controller
         $min = $data->min();
         $totalAmount = $data->sum();
 
-        // array data untuk grafik, data banyaknya order dalam 7 hari terakhir
-        $executiveSevenDays = [];
-        for ($i = 0; $i < 7; $i++) {
-            $executiveSevenDays[$i] = $orders->where('schedule.car.type', 'executive')->where('created_at', '>=', now()->subDays(7 - $i))->where('created_at', '<=', now()->subDays(6 - $i))->count();
+        // Mengambil data order 30 hari terakhir untuk grafik
+        $startDate = now()->subDays(30);
+        $endDate = now();
+
+        $orders = Order::with('schedule.car')
+            ->where('created_at', '>=', $startDate)
+            ->where('created_at', '<=', $endDate)
+            ->get();
+
+        // Inisialisasi array data
+        $executiveData = [];
+        $executiveLabels = [];
+        $nonExecutiveData = [];
+        $nonExecutiveLabels = [];
+
+        // Mengisi array data
+        for ($i = 0; $i < 30; $i++) {
+            array_push($executiveData, $orders->where('schedule.car.type', 'executive')
+                ->where('created_at', '>=', now()->subDays($i + 1)->startOfDay())
+                ->where('created_at', '<=', now()->subDays($i + 1)->endOfDay())
+                ->count());
+            array_push($nonExecutiveData, $orders->where('schedule.car.type', 'non-executive')
+                ->where('created_at', '>=', now()->subDays($i + 1)->startOfDay())
+                ->where('created_at', '<=', now()->subDays($i + 1)->endOfDay())
+                ->count());
         }
+        // dd($executiveData);
 
-
-        $nonExecutiveSevenDays = [];
-        for ($i = 0; $i < 7; $i++) {
-            $nonExecutiveSevenDays[$i] = $orders->where('schedule.car.type', 'non-executive')->where('created_at', '>=', now()->subDays(7 - $i))->where('created_at', '<=', now()->subDays(6 - $i))->count();
-        }
-
-        // dd($executiveSevenDays);
-        $sevenDays = [];
-        for ($i = 0; $i < 7; $i++) {
-            $sevenDays[$i] = now()->subDays(7 - $i)->format('M d');
+        // Mengisi array label
+        for ($i = 0; $i < 30; $i++) {
+            array_push($executiveLabels, now()->subDays($i + 1)->format('M d'));
+            array_push($nonExecutiveLabels, now()->subDays($i + 1)->format('M d'));
         }
 
         $executivePercentage = Helper::percentageChange($orders->where('schedule.car.type', 'executive')->count(), $orders->count());
@@ -81,11 +100,31 @@ class DashboardController extends Controller
             $executivePercentage,
             $nonExecutivePercentage,
         ];
-        // Mendapatkan data yang diperlukan untuk card
-        $totalUsers = User::count();
-        $totalCoupons = Coupon::count();
-        $totalOrders = Order::count();
 
-        return view('pages.backend.dashboard.index', compact('totalUsers', 'totalCoupons', 'totalOrders', 'ordersThisMonth', 'orderPercentage', 'averageDailyOrders', 'averageDailyOrdersPercentage', 'customerThisMonth', 'customerToday', 'ordersSevenDays', 'categories', 'data', 'max', 'min', 'totalAmount', 'executivePercentage', 'nonExecutivePercentage', 'percentages', 'executiveSevenDays', 'nonExecutiveSevenDays', 'sevenDays'));
+        $totalOrders = $orders->count();
+
+
+        return view('pages.backend.dashboard.index', compact(
+            'ordersThisMonth',
+            'orderPercentage',
+            'averageDailyOrders',
+            'averageDailyOrdersPercentage',
+            'customerThisMonth',
+            'customerToday',
+            'ordersSevenDays',
+            'categories',
+            'data',
+            'max',
+            'min',
+            'totalAmount',
+            'executiveData',
+            'executiveLabels',
+            'nonExecutiveData',
+            'nonExecutiveLabels',
+            'percentages',
+            'executivePercentage',
+            'nonExecutivePercentage',
+            'totalOrders'
+        ));
     }
 }
