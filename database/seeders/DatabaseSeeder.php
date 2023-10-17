@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             CarSeeder::class,
             ScheduleSeeder::class,
             CouponSeeder::class,
+            OrderSeeder::class,
             AgentSeeder::class,
         ]);
     }

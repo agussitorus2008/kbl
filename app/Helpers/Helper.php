@@ -35,4 +35,24 @@ class Helper
         }
         return $code;
     }
+
+    public static function percentageChange($part, $whole)
+    {
+        if ($whole == 0) {
+            return 0; // Untuk menghindari pembagian oleh nol
+        }
+
+        return ($part / $whole) * 100;
+    }
+
+    public static function diffPercentageChange($current, $previous)
+    {
+        if ($previous == 0) {
+            return 0; // Untuk menghindari pembagian oleh nol
+        }
+
+        $diff = $current - $previous;
+
+        return ($diff / $previous) * 100;
+    }
 }
