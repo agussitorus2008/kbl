@@ -18,6 +18,7 @@ class Order extends Model
             $order->user_id = auth()->id;
         });
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,6 +41,40 @@ class Order extends Model
     protected $casts = [
         'total' => 'float',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     */
+    protected $appends = ['links'];
+
+    /**
+     * Get the links attribute.
+     */
+    public function getLinksAttribute(): array
+    {
+        $baseUri = '/api/orders/' . $this->id;
+
+        return [
+            'self' => [
+                'href' => $baseUri,
+                'method' => 'GET',
+                'type' => 'application/json',
+                'description' => 'Get order detail'
+            ],
+            'update' => [
+                'href' => $baseUri,
+                'method' => 'PUT',
+                'type' => 'application/json',
+                'description' => 'Update order detail'
+            ],
+            'delete' => [
+                'href' => $baseUri,
+                'method' => 'DELETE',
+                'type' => 'application/json',
+                'description' => 'Delete order'
+            ],
+        ];
+    }
 
     /**
      * Get the user that owns the Order

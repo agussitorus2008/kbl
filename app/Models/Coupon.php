@@ -42,4 +42,39 @@ class Coupon extends Model
     {
         return $this->belongsTo(User::class)->withDefault();
     }
+
+    // hateoas
+    /**
+     * The accessors to append to the model's array form.
+     */
+    protected $appends = ['links'];
+
+    /**
+     * Get the links attribute.
+     */
+    public function getLinksAttribute(): array
+    {
+        $baseUri = '/api/coupons/' . $this->id;
+
+        return [
+            'self' => [
+                'href' => $baseUri,
+                'method' => 'GET',
+                'type' => 'application/json',
+                'description' => 'Get coupon detail'
+            ],
+            'update' => [
+                'href' => $baseUri,
+                'method' => 'PUT',
+                'type' => 'application/json',
+                'description' => 'Update coupon detail'
+            ],
+            'delete' => [
+                'href' => $baseUri,
+                'method' => 'DELETE',
+                'type' => 'application/json',
+                'description' => 'Delete coupon'
+            ],
+        ];
+    }
 }

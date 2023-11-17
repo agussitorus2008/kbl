@@ -47,6 +47,40 @@ class User extends Authenticatable
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     */
+    protected $appends = ['links'];
+
+    /**
+     * Get the links attribute.
+     */
+    public function getLinksAttribute(): array
+    {
+        $baseUri = '/api/users/' . $this->id;
+
+        return [
+            'self' => [
+                'href' => $baseUri,
+                'method' => 'GET',
+                'type' => 'application/json',
+                'description' => 'Get user detail'
+            ],
+            'update' => [
+                'href' => $baseUri,
+                'method' => 'PUT',
+                'type' => 'application/json',
+                'description' => 'Update user detail'
+            ],
+            'delete' => [
+                'href' => $baseUri,
+                'method' => 'DELETE',
+                'type' => 'application/json',
+                'description' => 'Delete user'
+            ],
+        ];
+    }
+
+    /**
      * Get all of the orders for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

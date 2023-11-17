@@ -40,6 +40,40 @@ class Schedule extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     */
+    protected $appends = ['links'];
+
+    /**
+     * Get the links attribute.
+     */
+    public function getLinksAttribute(): array
+    {
+        $baseUri = '/api/schedules/' . $this->id;
+
+        return [
+            'self' => [
+                'href' => $baseUri,
+                'method' => 'GET',
+                'type' => 'application/json',
+                'description' => 'Get schedule detail'
+            ],
+            'update' => [
+                'href' => $baseUri,
+                'method' => 'PUT',
+                'type' => 'application/json',
+                'description' => 'Update schedule detail'
+            ],
+            'delete' => [
+                'href' => $baseUri,
+                'method' => 'DELETE',
+                'type' => 'application/json',
+                'description' => 'Delete schedule detail'
+            ],
+        ];
+    }
+
+    /**
      * Get the car that owns the Schedule
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
