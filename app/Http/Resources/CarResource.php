@@ -22,7 +22,7 @@ class CarResource extends JsonResource
             'plate_number' => $this->plate_number,
             'image' => $this->image ? asset('images/cars/' . $this->image) : null,
             'type' => $this->type,
-            // 'links' => $this->links,
+            'links' => $this->links,
         ];
     }
 }

@@ -82,8 +82,6 @@ class DriverController extends Controller
             );
         }
 
-        // dd($driver);
-
         return ResponseFormatter::success(
             new DriverResource($driver),
             'Data driver berhasil diambil'

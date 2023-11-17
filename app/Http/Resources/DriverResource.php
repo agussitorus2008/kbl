@@ -20,8 +20,10 @@ class DriverResource extends JsonResource
             'phone' => $this->phone,
             'address' => $this->address,
             'image' => $this->image ? asset('images/drivers/' . $this->image) : null,
-            'car' => $this->whenLoaded('car') ? new CarResource($this->car) : null,
-            // 'links' => $this->links,
+            'car' => $this->whenLoaded('car', function () {
+                return new CarResource($this->car);
+            }),
+            'links' => $this->links,
         ];
     }
 }

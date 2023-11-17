@@ -17,7 +17,9 @@ class ChatResource extends JsonResource
         return [
             'id' => $this->id,
             'message' => $this->message,
-            'user' => $this->whenLoaded('user') ? new UserResource($this->user) : null,
+            'user' => $this->whenLoaded('user', function () {
+                return new UserResource($this->user);
+            }),
             'created_at' => $this->created_at,
             'links' => $this->links,
         ];
