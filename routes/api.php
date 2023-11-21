@@ -2,13 +2,16 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Contracts\Role;
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\AgentController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\ScheduleController;
-use Spatie\Permission\Contracts\Role;
 
 /*
 |--------------------------------------------------------------------------

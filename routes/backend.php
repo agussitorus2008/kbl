@@ -36,12 +36,12 @@ Route::name('backend.')->group(function () {
     Route::resource('coupons', CouponController::class);
 
     // PROFILE
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('', [ProfileController::class, 'index'])->name('index');
-        Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
-        Route::post('cpassword', [ProfileController::class, 'cpassword'])->name('cpassword');
-        Route::post('save', [ProfileController::class, 'save'])->name('save');
-    });
+    // Route::prefix('profile')->name('profile.')->group(function () {
+    //     Route::get('', [ProfileController::class, 'index'])->name('index');
+    //     Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
+    //     Route::post('cpassword', [ProfileController::class, 'cpassword'])->name('cpassword');
+    //     Route::post('save', [ProfileController::class, 'save'])->name('save');
+    // });
 
     // Notification
     Route::get('counter', [NotificationController::class, 'counter'])->name('counter_notif');
