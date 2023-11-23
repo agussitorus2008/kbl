@@ -110,7 +110,8 @@
                                         onclick="check('#tombol_apply', 'APPLY');">APPLY</a>
                                 </span>
                             </div>
-                            <a href="javascript:;" onclick="next();" class="btn btn-primary btn-block">
+                            <a href="javascript:;" onclick="payment('#tombol_payment');" id="tombol_payment"
+                                class="btn btn-primary btn-block">
                                 Buat Pesanan
                             </a>
                         </div>

@@ -109,10 +109,10 @@ class CheckoutController extends Controller
         }
 
         $admin = User::where('id', 1)->first();
-        $admin->notify(new \App\Notifications\NewOrderNotification($order, $from, $to, $schedule));
+        // $admin->notify(new \App\Notifications\NewOrderNotification($order, $from, $to, $schedule));
 
         $user = User::where('id', auth()->user()->id)->first();
-        $user->notify(new \App\Notifications\OrderCreatedNotification($order));
+        // $user->notify(new \App\Notifications\OrderCreatedNotification($order));
 
         return view('pages.frontend.checkout.detail', compact('order'));
     }

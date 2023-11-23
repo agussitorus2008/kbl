@@ -9,9 +9,9 @@
     <title>Bukti Tiket</title>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900'
         type='text/css'>
-    <link href="{{ asset('users/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('users/vendor/font-awesome/css/all.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('users/css/stylesheet.css') }}" />
+    <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/font-awesome/css/all.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/stylesheet.css') }}" />
 </head>
 
 <body>
@@ -91,7 +91,7 @@
                 <span class="font-weight-500 text-3">{{ Auth::guard('web')->user()->name }}</span>
             </div>
             <div class="col-sm-4 mb-3 mb-sm-0"> <span class="text-black-50 text-uppercase">Nomor Bangku :</span><br>
-                @foreach ($order->order_details as $item)
+                @foreach ($order->orderDetails as $item)
                     <span class="font-weight-500 text-3">{{ $item->seat_id }}</span>
                 @endforeach
             </div>
@@ -122,9 +122,9 @@
                                 <td class="border-0" width="60%">Tiket</td>
                                 <td class="text-right border-0" width="20%">Rp.
                                     {{ number_format($order->schedule->price, 0, ',', '.') }} x
-                                    {{ $order->order_details->count() }}</td>
+                                    {{ $order->orderDetails->count() }}</td>
                                 <td class="text-right border-0" width="20%">Rp.
-                                    {{ number_format($order->schedule->price * $order->order_details->count(), 0, ',', '.') }}
+                                    {{ number_format($order->schedule->price * $order->orderDetails->count(), 0, ',', '.') }}
                             </tr>
                             @if ($order->coupon)
                                 <tr>
