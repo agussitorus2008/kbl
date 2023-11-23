@@ -14,7 +14,7 @@
                 </a>
             </li>
         @endif
-        @foreach ($elements as $$element)
+        @foreach ($elements as $element)
             @if (is_string($element))
                 <li class="page-item disabled"> <a class="page-link" href="javascript:;">...</a></li>
             @endif

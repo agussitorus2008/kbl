@@ -65,23 +65,6 @@ class CheckoutController extends Controller
         }
     }
 
-    public function payment(Request $request)
-    {
-        $validators = Validator::make($request->all(), []);
-
-        if ($validators->fails()) {
-            return response()->json([
-                'alert' => 'error',
-                'message' => $validators->errors()->first(),
-            ]);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Successfully',
-        ]);
-    }
-
     public function do_checkout(Request $request)
     {
         $schedule = Schedule::find($request->schedule_id);
@@ -131,6 +114,6 @@ class CheckoutController extends Controller
         $user = User::where('id', auth()->user()->id)->first();
         $user->notify(new \App\Notifications\OrderCreatedNotification($order));
 
-        return view('pages.backend.checkout.detail', compact('order'));
+        return view('pages.frontend.checkout.detail', compact('order'));
     }
 }

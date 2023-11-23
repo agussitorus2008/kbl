@@ -16,8 +16,10 @@
                     <div id="header-nav" class="collapse navbar-collapse">
                         <ul class="navbar-nav">
                             <li class="login-signup ml-lg-2"><a class="pl-lg-4 pr-0" href="/">Home</a></li>
-                            <li class="login-signup ml-lg-2"><a class="pl-lg-4 pr-0" href="">Jadwal</a></li>
-                            <li class="login-signup ml-lg-2"><a class="pl-lg-4 pr-0" href="">Agen</a></li>
+                            <li class="login-signup ml-lg-2"><a class="pl-lg-4 pr-0"
+                                    href="{{ route('schedule') }}">Jadwal</a></li>
+                            <li class="login-signup ml-lg-2"><a class="pl-lg-4 pr-0"
+                                    href="{{ route('about') }}">Tentang</a></li>
                         </ul>
                     </div>
                 </nav>

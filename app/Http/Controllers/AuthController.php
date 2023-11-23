@@ -36,7 +36,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Berhasil Masuk',
-                'redirect' => Auth::user()->hasRole('admin') ? route('backend.dashboard') : route('home'),
+                'redirect' => Auth::user()->hasRole('admin') ? route('backend.dashboard') : 'refresh',
             ]);
         } else {
             return response()->json([

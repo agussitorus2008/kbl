@@ -8,6 +8,7 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CouponResource;
 use App\Http\Resources\CouponCollection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CouponController extends Controller
@@ -31,10 +32,10 @@ class CouponController extends Controller
      */
     public function index()
     {
-        // if role is admin, get all coupons, else get coupons of the authenticated user
-        $coupons = auth()->user()->hasRole('admin')
+        // if auth and is admin, get all coupons, else get coupons of the authenticated user
+        $coupons = Auth::check() && Auth::user()->hasRole('admin')
             ? Coupon::with('user')->get()
-            : auth()->user()->coupons;
+            : Coupon::where('user_id', Auth::id())->get();
 
         return ResponseFormatter::success(
             new CouponCollection($coupons),

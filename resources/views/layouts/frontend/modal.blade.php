@@ -117,6 +117,57 @@
                             confirmButton: "btn btn-primary"
                         }
                     }).then(function() {
+                        if (response.redirect != 'refresh') {
+                            window.location.href = response.redirect;
+                        } else {
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    $(tombol).attr('disabled', false);
+                    $(tombol).html('Login');
+                    Swal.fire({
+                        text: response.message,
+                        icon: "error",
+                        buttonsStyling: !1,
+                        confirmButtonText: "Ok, Mengerti!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                }
+            },
+        });
+    }
+</script>
+<!-- Bus Details (Select Seats) Modal Dialog
+  ============================================= -->
+<div id="select-busseats" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<script>
+    function handle_login(tombol, form, url, method) {
+        $(tombol).attr('disabled', true);
+        $(tombol).html('<i class="ri-refresh-line spin"></i>');
+        $.ajax({
+            url: url,
+            method: method,
+            data: $(form).serialize(),
+            success: function(response) {
+                if (response.alert == 'success') {
+                    Swal.fire({
+                        text: response.message,
+                        icon: "success",
+                        buttonsStyling: !1,
+                        confirmButtonText: "Ok, Mengerti!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    }).then(function() {
                         window.location.href = response.redirect;
                     });
                 } else {

@@ -58,7 +58,7 @@ class ScheduleController extends Controller
                 ->when($request->available_seats, function ($query) use ($request) {
                     return $query->where('available_seats', '>=', $request->available_seats);
                 })
-                ->paginate(10);
+                ->paginate(9);
 
             return view('pages.frontend.schedule.list', compact('collection', 'route'));
         }
@@ -69,14 +69,13 @@ class ScheduleController extends Controller
 
     public function seats(Schedule $schedule)
     {
-        $orders = $schedule->orders()->where('status', 'booked')->get();
+        $orders = $schedule->orders()->where('status', 'booked')->with('orderDetails')->get();
         $orders_details = $orders->map(function ($order) {
-            return $order->order_details;
+            return $order->orderDetails;
         })->flatten();
         $mark = 'e';
         $seats = [];
         $selected = [];
-        $carType = $schedule->car->type;
 
         // Function to calculate seats based on car type
         function calculateSeats($carCapacity, $rows, $mark, $closed)
@@ -85,7 +84,7 @@ class ScheduleController extends Controller
             for ($i = 1; $i <= $rows; $i++) {
                 $seat = '';
                 for ($j = 1; $j <= $carCapacity; $j++) {
-                    if ($i != $rows && $j == $closed) {
+                    if ($i == 1 && $j == $closed) {
                         $seat .= '_';
                     } else {
                         $seat .= $mark;
@@ -97,16 +96,8 @@ class ScheduleController extends Controller
         }
 
         // Calculate seats based on car type
-        if ($carType == 'bus') {
-            $row = round($schedule->car->capacity / 5) + 2;
-            $seats = calculateSeats(5, $row, $mark, 3);
-        } elseif ($carType == 'minibus') {
-            $row = round($schedule->car->capacity / 4) + 1;
-            $seats = calculateSeats(4, $row, $mark, 3);
-        } elseif ($carType == 'car') {
-            $row = round($schedule->car->capacity / 3);
-            $seats = calculateSeats(3, $row, $mark, 3);
-        }
+        $row = round($schedule->car->capacity / 3);
+        $seats = calculateSeats(3, $row, $mark, 3);
 
         // Collect selected seats in a single pass
         foreach ($orders_details as $order_detail) {

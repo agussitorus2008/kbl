@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('schedule_id')->constrained('schedules');
-            $table->foreignId('coupon_id')->constrained('coupons')->nullable();
+            $table->foreignId('coupon_id')->nullable()->constrained('coupons');
             $table->string('code')->unique();
             $table->double('total');
             $table->enum('status', ['pending', 'booked', 'canceled', 'rejected'])->default('pending');

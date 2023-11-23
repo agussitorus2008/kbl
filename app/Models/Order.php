@@ -9,15 +9,15 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected static function booted()
-    {
-        parent::boot();
+    // protected static function booted()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($order) {
-            $order->code = 'ORDER-' . time();
-            $order->user_id = auth()->id;
-        });
-    }
+    //     static::creating(function ($order) {
+    //         $order->code = 'ORDER-' . time();
+    //         $order->user_id = auth()->user()->id;
+    //     });
+    // }
 
     /**
      * The attributes that are mass assignable.

@@ -77,6 +77,7 @@
 </div>
 <script>
     var firstSeatLabel = 1;
+
     $.getJSON("{{ route('schedule.seats', $data->id) }}", function(data) {
         var $cart = $('#selected-seats'),
             $counter = $('#counter'),
@@ -104,8 +105,8 @@
                 },
                 click: function() {
                     if (this.status() == 'available') {
-
-                        $('<li>Seat # ' + this.settings.label + ': <b>Rp. ' + this.data().price +
+                        $('<li>Seat # ' + this.settings.label + ': <b>Rp. ' + formatRupiah(this.data()
+                                    .price) +
                                 '</b> <a href="#" class="cancel-cart-item text-danger text-4"><i class="far fa-times-circle"></i></a></li>'
                             )
                             .attr('id', 'cart-item-' + this.settings.id)
@@ -114,25 +115,23 @@
                             .appendTo($cart);
 
                         $counter.text(sc.find('selected').length + 1);
-                        $total.text(recalculateTotal(sc) + this.data().price);
+                        $total.text(formatRupiah(recalculateTotal(sc) + this.data().price));
                         $seats.push(this.settings.label);
                         $('input[name="seats[]"]').val($seats);
                         return 'selected';
                     } else if (this.status() == 'selected') {
-
                         $counter.text(sc.find('selected').length - 1);
+                        $total.text(formatRupiah(recalculateTotal(sc) - this.data().price));
 
-                        $total.text(recalculateTotal(sc) - this.data().price);
-
-                        //remove the item from our cart
+                        // remove the item from our cart
                         $('#cart-item-' + this.settings.id).remove();
-                        //seat has been vacated
+                        // seat has been vacated
                         $seats.splice($.inArray(this.settings.label, $seats), 1);
                         $('input[name="seats[]"]').val($seats);
-                        //seat has been vacated
+                        // seat has been vacated
                         return 'available';
                     } else if (this.status() == 'unavailable') {
-                        //seat has been already booked
+                        // seat has been already booked
                         return 'unavailable';
                     } else {
                         return this.style();
@@ -140,26 +139,48 @@
                 }
             });
 
-        //this will handle "[cancel]" link clicks
+        // this will handle "[cancel]" link clicks
         $('#selected-seats').on('click', '.cancel-cart-item', function() {
-            //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+            // let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
             sc.get($(this).parents('li:first').data('seatId')).click();
-
         });
 
-        //let's pretend some seats have already been booked
+        // let's pretend some seats have already been booked
         sc.get(data.selected).status('unavailable');
     });
 
     function recalculateTotal(sc) {
         var total = 0;
 
-        //basically find every selected seat and sum its price
+        // basically find every selected seat and sum its price
         sc.find('selected').each(function() {
             total += this.data().price;
         });
 
+        // Update the total element with the formatted total
+        $('#total').text(formatRupiah(total));
+
         return total;
+    }
+
+    // Function to format a number as IDR
+    function formatRupiah(angka) {
+        var numberString = angka.toString().replace(/[^,\d]/g, ''),
+            split = numberString.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        // Add thousand separator
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        // Add decimal part
+        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+
+        return 'Rp ' + rupiah;
     }
 
     function confirm(form) {

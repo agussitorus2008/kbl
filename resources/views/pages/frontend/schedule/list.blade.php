@@ -62,7 +62,7 @@
                             </ul>
                         </div>
                         <div class="card-footer bg-transparent d-flex justify-content-between">
-                            <a href="javascript:;" onclick="load_detail('{{ route('schedule.show', $item->id) }}')"
+                            <a href="{{ route('schedule.show', $item->id) }}"
                                 class="btn btn-sm btn-primary order-4">Detail</a>
                             @auth
                                 <a href="javascript:;"

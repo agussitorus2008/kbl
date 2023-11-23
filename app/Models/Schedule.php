@@ -82,4 +82,14 @@ class Schedule extends Model
     {
         return $this->belongsTo(Car::class);
     }
+
+    /**
+     * Get all of the orders for the Schedule
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }

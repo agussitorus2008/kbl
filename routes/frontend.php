@@ -20,10 +20,10 @@ Route::get('auth/register', [AuthController::class, 'register'])->name('auth.reg
 Route::get('auth/forgot', [AuthController::class, 'forgot'])->name('auth.forgot');
 Route::get('about', fn () => view('pages.frontend.about.index'))->name('about');
 
-// Route::prefix('auth')->name('auth.')->group(function () {
-//     Route::post('login', [AuthController::class, 'do_login'])->name('login');
-//     Route::post('register', [AuthController::class, 'do_register'])->name('register');
-// });
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::post('login', [AuthController::class, 'do_login'])->name('login');
+    Route::post('register', [AuthController::class, 'do_register'])->name('register');
+});
 
 Route::middleware(['auth', 'role:customer'])->group(function () {
     // PROFILE

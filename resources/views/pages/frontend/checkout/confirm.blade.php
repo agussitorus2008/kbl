@@ -10,7 +10,11 @@
             </div>
         </div>
     </section>
-    <div id="confirm">
+    <form action="{{ route('checkout') }}" method="post" id="form-payment">
+        @csrf
+        <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
+        <input type="hidden" name="coupon_id" id="coupon" value="">
+        <input type="hidden" name="seats" value="">
         <div id="content">
             <section class="container">
                 <div class="row">
@@ -107,67 +111,12 @@
                                 </span>
                             </div>
                             <a href="javascript:;" onclick="next();" class="btn btn-primary btn-block">
-                                Lanjut ke Pembayaran
+                                Buat Pesanan
                             </a>
                         </div>
                     </aside>
                 </div>
             </section>
-        </div>
-    </div>
-    <form action="{{ route('checkout') }}" method="post" id="form-payment">
-        @csrf
-        <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
-        <input type="hidden" name="coupon_id" id="coupon" value="">
-        <input type="hidden" name="seats" value="">
-        <div id="payment">
-            <div id="content">
-                <div class="container">
-                    <div class="bg-white shadow-md rounded p-4">
-                        <h3 class="text-6 mb-4">Metode Pembayaran</h3>
-                        <hr class="mx-n4">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-8 order-1 order-md-0">
-                                <div class="row">
-                                    <div class="col-lg-9">
-                                        <h3 class="text-4 mb-4">Masukkan Detail Pembayaran</h3>
-                                        <form id="payment" method="post">
-                                            <a class="btn btn-primary btn-block btn-total" href="javascript:;"
-                                                onclick="payment('#tombol_payment')" id="tombol_payment">Bayar</a>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 col-lg-4 order-0 order-md-1">
-                                <div class="bg-light-2 rounded p-4 mb-4">
-                                    <h3 class="text-4 mb-4">Pembayaran</h3>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2">Harga
-                                            <span class="float-right text-4 font-weight-500 text-dark price"
-                                                data-price="{{ $schedule->price }}"></span>
-                                        </li>
-                                        <li class="mb-2 discount" id="discount"></li>
-                                    </ul>
-                                    <hr class="mx-n4">
-                                    <div class="text-dark text-4 font-weight-500 py-1"> Total Harga
-                                        <span class="float-right text-7 total"></span>
-                                    </div>
-                                </div>
-                                <div class="bg-light-2 rounded p-4">
-                                    <h3 class="text-4 mb-2">Kami menjamin privasi Anda</h3>
-                                    <p class="mb-0">Kami tidak akan menjual atau menyebarkan informasi pribadi
-                                        Anda kepada pihak ketiga.</p>
-                                    <hr class="mx-n4">
-                                    <h3 class="text-4 mb-3">Pertanyaan Penagihan</h3>
-                                    <p class="mb-0">Jika Anda memiliki pertanyaan tentang penagihan, silahkan
-                                        hubungi kami</p>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </form>
 @endsection
@@ -254,38 +203,33 @@
         }
 
         function payment(tombol) {
-            let data = $('#form-payment').serialize();
-            $(tombol).prop("disabled", true);
-            $(tombol).html("Please wait");
-            $.ajax({
-                url: "{{ route('confirm.payment') }}",
-                type: 'POST',
-                data: data,
-                success: function(response, title) {
-                    if (response.status == 'success') {
-                        $('#form-payment').submit();
-                    } else {
-                        Swal.fire({
-                            text: response.message,
-                            icon: "error",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, Mengerti!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                        setTimeout(function() {
-                            $(tombol).prop("disabled", false);
-                            $(tombol).html('Proceed to Pay Rp. ' + format_ribuan(total));
-                        }, 2000);
-                    }
+            // confirm with swal fire
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Anda akan melakukan pembayaran sebesar Rp. " + format_ribuan(total),
+                icon: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Ya, Lanjutkan!",
+                cancelButtonText: "Tidak, Batalkan!",
+                reverseButtons: !0
+            }).then(function(result) {
+                if (result.value) {
+                    $(tombol).prop("disabled", true);
+                    $(tombol).html("Please wait");
+                    $('#form-payment').submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: "Dibatalkan",
+                        text: "Pembayaran anda telah dibatalkan",
+                        icon: "error",
+                        buttonsStyling: !1,
+                        confirmButtonText: "Ok, Mengerti!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
                 }
             });
-        }
-
-        function next() {
-            $('#confirm').hide();
-            $('#payment').show();
         }
     </script>
 @endpush
