@@ -5,7 +5,7 @@
                 <!-- Logo -->
                 <div class="logo">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('img/logo.svg') }}" alt="KBL" width="150">
+                        <img src="{{ asset('img/logo.png') }}" alt="KBL" height="50">
                     </a>
                 </div>
                 <!-- Logo end -->
@@ -31,12 +31,12 @@
                 <span></span> <span></span> </button>
             @auth
                 {{-- MENU --}}
-                <nav class="login-signup navbar navbar-expand separator ml-sm-2 pl-sm-2">
+                <nav class="login-signup navbar navbar-expand separator">
                     <ul class="navbar-nav">
                         <li class="profile dropdown {{ request()->is('profile') ? 'active' : '' }}">
                             <a class="pr-0 dropdown-toggle" href="#" title="My Profile">
                                 <span class="d-none d-sm-inline-block">{{ Auth::user()->name }}</span>
-                                <span class="user-icon ml-sm-2">
+                                <span class="user-icon ms-sm-2">
                                     <i class="fas fa-user"></i>
                                 </span>
                             </a>
@@ -44,23 +44,23 @@
                                 <li class="text-center text-3 py-2">Hi, {{ Auth::user()->name }}</li>
                                 <li class="dropdown-divider mx-n3"></li>
                                 <li>
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
                                         <i class="fas fa-user">
                                         </i>Informasi Pribadi
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item" href="{{ route('order.index') }}">
                                         <i class="fas fa-history"></i>Riwayat Pesanan
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item" href="{{ route('coupon.index') }}">
                                         <i class="fas fa-ticket-alt"></i>Kupon
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item" href="{{ route('cpassword') }}">
                                         <i class="fas fa-key">
                                         </i>Ubah Password
                                     </a>
@@ -94,13 +94,12 @@
             @endauth
             @guest
                 {{-- AUTHENTIKASI --}}
-                <nav class="login-signup navbar navbar-expand separator ml-sm-2 pl-sm-2">
+                <nav class="login-signup navbar navbar-expand separator pl-sm-2">
                     <ul class="navbar-nav">
                         <li class="profile">
-                            <a class="pr-0" data-toggle="modal" data-target="#login-signup" href="#"
-                                title="Login / Sign up">
+                            <a class="pr-0" href="{{ route('login') }}" title="Login / Sign up">
                                 <span class="d-none d-sm-inline-block">Masuk / Daftar</span>
-                                <span class="user-icon ml-sm-2"><i class="fas fa-user"></i>
+                                <span class="user-icon ms-sm-2"><i class="fas fa-user"></i>
                                 </span>
                             </a>
                         </li>

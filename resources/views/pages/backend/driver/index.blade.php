@@ -91,14 +91,13 @@
         </div>
     </div>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script>
         $(document).ready(function() {
             $('#datatables').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: 
-                columns: [{
+                ajax: columns: [{
                         data: 'name',
                         name: 'name'
                     },

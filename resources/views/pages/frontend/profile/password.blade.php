@@ -1,7 +1,7 @@
 @extends('layouts.frontend.master')
 @section('title', 'Change Password')
 @section('content')
-    <section class="page-header page-header-text-light bg-secondary">
+    <section class="page-header page-header-dark bg-secondary">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
@@ -26,18 +26,18 @@
                         <div class="row">
                             <div class="col-lg-8">
                                 <form id="changePassword">
-                                    <div class="form-group">
-                                        <label for="existingPassword">Password Lama</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="existingPassword">Password Lama</label>
                                         <input type="text" class="form-control" name="current_password"
                                             id="existingPassword" placeholder="Password Lama">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="newPassword">Password Baru</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="newPassword">Password Baru</label>
                                         <input type="text" class="form-control" name="new_password" id="newPassword"
                                             placeholder="Password Baru">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="existingPassword">Konfirmasi Password Baru</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="existingPassword">Konfirmasi Password Baru</label>
                                         <input type="text" class="form-control" name="confirm_password"
                                             placeholder="Konfirmasi Password Baru">
                                     </div>

@@ -92,7 +92,7 @@
         </div>
     </div>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script>
         $(document).ready(function() {
             $('#datatables').DataTable({

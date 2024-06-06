@@ -51,6 +51,4 @@ Route::name('backend.')->group(function () {
     Route::get('chats', [ChatController::class, 'index'])->name('chats.index');
     Route::get('chats/{id}', [ChatController::class, 'show'])->name('chats.show');
     Route::post('chats/store', [ChatController::class, 'store'])->name('chats.store');
-
-    Route::get('logout', [AuthController::class, 'do_logout'])->name('logout');
 });

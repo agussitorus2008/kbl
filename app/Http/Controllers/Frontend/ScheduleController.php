@@ -58,7 +58,7 @@ class ScheduleController extends Controller
                 ->when($request->available_seats, function ($query) use ($request) {
                     return $query->where('available_seats', '>=', $request->available_seats);
                 })
-                ->paginate(9);
+                ->paginate(6);
 
             return view('pages.frontend.schedule.list', compact('collection', 'route'));
         }

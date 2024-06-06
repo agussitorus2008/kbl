@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\Helper;
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Coupon;
@@ -11,7 +10,7 @@ use App\Models\Schedule;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use App\Services\Midtrans\CreateSnapTokenService;
 
 class CheckoutController extends Controller
 {
@@ -94,6 +93,12 @@ class CheckoutController extends Controller
             $orderDetail->save();
         }
 
+        $midtrans = new CreateSnapTokenService($order);
+        $snapToken = $midtrans->getSnapToken();
+
+        $order->snap_token = $snapToken;
+        $order->save();
+
         if ($schedule->route == 'ML') {
             $from = 'Medan';
             $to = 'Laguboti';
@@ -114,6 +119,30 @@ class CheckoutController extends Controller
         $user = User::where('id', auth()->user()->id)->first();
         // $user->notify(new \App\Notifications\OrderCreatedNotification($order));
 
-        return view('pages.frontend.checkout.detail', compact('order'));
+        return redirect()->route('payment', $order->id);
+    }
+
+    public function payment(Order $order)
+    {
+        if ($order->snap_token == null) {
+            $midtrans = new CreateSnapTokenService($order);
+            $snapToken = $midtrans->getSnapToken();
+            $order->snap_token = $snapToken;
+            $order->save();
+        }
+        if ($order->payment_status == 2) {
+            return redirect()->route('invoice', $order->id);
+        }
+        return view('pages.frontend.checkout.payment', compact('order'));
+    }
+
+    public function success(Order $order)
+    {
+        return view('pages.frontend.checkout.success', compact('order'));
+    }
+
+    public function invoice(Order $order)
+    {
+        return view('pages.frontend.orders.detail', compact('order'));
     }
 }

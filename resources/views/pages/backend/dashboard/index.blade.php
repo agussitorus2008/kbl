@@ -204,63 +204,6 @@
                     <!--end::Card widget 6-->
                 </div>
                 <!--end::Col-->
-                {{-- <div class="col-lg-4 mb-6">
-                    <div class="card card-custom card-stretch gutter-b">
-                        <div class="card-header pt-5">
-                            <div class="card-title d-flex flex-column">
-                                <h3 class="font-weight-bolder text-dark font-size-h5">
-                                    <span class="text-muted font-weight-bold mr-2">Total</span>
-                                    <span class="text-dark">Pengguna</span>
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <div class="font-weight-bolder text-dark-75 font-size-h4 font-weight-bold mb-4">
-                                {{ $totalUsers }} Pengguna
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                {{-- <div class="col-lg-4 mb-6">
-                    <div class="card card-custom card-stretch gutter-b">
-                        <!--begin::Header-->
-                        <div class="card-header pt-5">
-                            <!--begin::Title-->
-                            <div class="card-title d-flex flex-column">
-                                <h3 class="font-weight-bolder text-dark font-size-h5">
-                                    <span class="text-muted font-weight-bold mr-2">Total</span>
-                                    <span class="text-dark">Coupon</span>
-                                </h3>
-                            </div>
-                            <!--end::Title-->
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <div class="font-weight-bolder text-dark-75 font-size-h4 font-weight-bold mb-4">
-                                {{ $totalCoupons }} Kupon
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-6">
-                    <div class="card card-custom card-stretch gutter-b">
-                        <!--begin::Header-->
-                        <div class="card-header pt-5">
-                            <!--begin::Title-->
-                            <div class="card-title d-flex flex-column">
-                                <h3 class="font-weight-bolder text-dark font-size-h5">
-                                    <span class="text-muted font-weight-bold mr-2">Total</span>
-                                    <span class="text-dark">Pemesanan</span>
-                                </h3>
-                            </div>
-                            <!--end::Title-->
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <div class="font-weight-bolder text-dark-75 font-size-h4 font-weight-bold mb-4">
-                                {{ $totalOrders }} Pemesanan
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
             <div class="row g-5 g-xl-8">
                 <!--begin::Col-->
@@ -523,7 +466,7 @@
         </div>
     </div>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script>
         // get name of this month
         var thisMonth = new Date().toLocaleString('default', {

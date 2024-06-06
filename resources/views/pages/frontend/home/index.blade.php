@@ -17,7 +17,7 @@
                                             @csrf
                                             <div class="row">
                                                 <div class="col-12 form-group">
-                                                    <select class="custom-select" name="route">
+                                                    <select class="form-select" name="route">
                                                         <option value="">Pilih Rute</option>
                                                         <option value="ML">Medan - Laguboti</option>
                                                         <option value="LM">Laguboti - Medan</option>
@@ -25,11 +25,10 @@
                                                         <option value="SL">Sibolga - Laguboti</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-12 form-group">
+                                                <div class="col-12 position-relative">
                                                     <input id="busDepart" type="text" class="form-control"
                                                         name="departure_time" placeholder="Depart Date">
-                                                    <span class="icon-inside"><i class="far fa-calendar-alt"
-                                                            aria-hidden="true"></i></span>
+                                                    <span class="icon-inside"><i class="far fa-calendar-alt"></i></span>
                                                 </div>
                                                 <div class="col-12 travellers-class form-group">
                                                     <input type="text" id="busTravellersClass"
@@ -119,7 +118,7 @@
         </div>
     </div>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script>
         $(function() {
             'use strict';

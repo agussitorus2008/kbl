@@ -46,7 +46,6 @@ class DashboardController extends Controller
                 ->where('created_at', '<=', now()->subDays($i + 1)->endOfDay())
                 ->count());
         }
-        // dd($ordersSevenDays);
 
         $categories = $orders->pluck('created_at')->map(function ($date) {
             return $date->format('M d');

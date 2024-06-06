@@ -38,7 +38,7 @@
                 <td class="align-middle text-right">Rp. {{ number_format($order->total) }}</td>
                 <td class="align-middle text-center">
                     <a href="{{ route('order.show', $order->id) }}" class="btn btn-sm btn-primary">Detail</a>
-                    @if ($order->status == 'pending')
+                    @if ($order->status == 'pending' || $order->status == 'booked')
                         <a href="javascript:;"
                             onclick="handle_confirm('Apakah anda yakin ingin membatalkan pesanan ini?', 'YA', 'TIDAK', 'PATCH', '{{ route('order.cancel', $order->id) }}')"
                             class="btn btn-sm btn-danger">Batalkan</a>

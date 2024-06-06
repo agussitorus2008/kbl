@@ -5,7 +5,7 @@
 <script src="{{ asset('frontend/vendor/bootstrap-spinner/bootstrap-spinner.js') }}"></script>
 <script src="{{ asset('frontend/vendor/daterangepicker/moment.min.js') }}"></script>
 <script src="{{ asset('frontend/vendor/daterangepicker/daterangepicker.js') }}"></script>
-<script src="{{ asset('frontend/vendor/jquery-seat-charts/jquery.seat-charts.js') }}"></script>
+<script src="{{ asset('frontend/vendor/jquery-seat-charts/jquery.seat-charts.min.js') }}"></script>
 
 <script src="{{ asset('js/toastr.js') }}"></script>
 <script src="{{ asset('js/sweetalert.js') }}"></script>
@@ -40,4 +40,4 @@
     <script src="{{ asset('js/auth.js') }}"></script>
 @endguest
 <script src="{{ asset('frontend/js/theme.js') }}"></script>
-@stack('custom-scripts')
+@stack('scripts')

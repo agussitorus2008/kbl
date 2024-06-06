@@ -24,37 +24,98 @@ $('.primary-menu ul.navbar-nav li.dropdown, .login-signup ul.navbar-nav li.dropd
 		$(this).bind('mouseleave', function() {
 		$(this).find('> .dropdown-menu').stop().css('display', 'none'); 
 		});
-	}
-});
 
 // When dropdown going off to the out of the screen.
-	$('.primary-menu .dropdown-menu, .login-signup .dropdown-menu').each(function() {
+	$('.primary-menu ul.navbar-nav > li.dropdown > .dropdown-menu').each(function() {
 		var menu = $('#header .header-row').offset();
 		var dropdown = $(this).parent().offset();
-		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#header .header-row').outerWidth());
+		if ($("html").attr("dir") == 'rtl') {
+			var rd = ($(window).width() - (dropdown.left + $(this).parent().outerWidth()));
+			var i = (rd + $(this).outerWidth()) - (menu.left + $('#header .header-row').outerWidth());
+		}else{
+			var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#header .header-row').outerWidth());
+		}
 		if (i > 0) {
-			$(this).css('margin-left', '-' + (i + 5) + 'px');
+			if ($("html").attr("dir") == 'rtl') {
+				$(this).css('margin-right', '-' + (i) + 'px');
+			}else{
+				$(this).css('margin-left', '-' + (i) + 'px');
+			}
 		}
 	});
+  }
+});
+
 $(function () {
     $(".dropdown li").on('mouseenter mouseleave', function (e) {
 		if ($(window).width() > 991) {
+			if ($('.dropdown-menu', this).length) {
             var elm = $('.dropdown-menu', this);
             var off = elm.offset();
             var l = off.left;
             var w = elm.width();
             var docW = $(window).width();
-            var isEntirelyVisible = (l + w + 30 <= docW);
+            var lr = ($(window).width() - (off.left + elm.outerWidth())); //offset right
+				if ($("html").attr("dir") == 'rtl') {
+					var isEntirelyVisible = (lr + w + 30 <= docW);
+				}else{
+					var isEntirelyVisible = (l + w + 30 <= docW);
+				}
             if (!isEntirelyVisible) {
-                $(elm).addClass('dropdown-menu-right');
-				$(elm).parents('.dropdown:first').find('> a.dropdown-toggle > .arrow').addClass('arrow-right');
+                $(elm).addClass('dropdown-menu-end');
+				$(elm).parents('.dropdown:first').find('> a.dropdown-toggle > .arrow').addClass('arrow-end');
             } else {
-                $(elm).removeClass('dropdown-menu-right');
-				$(elm).parents('.dropdown:first').find('> a.dropdown-toggle > .arrow').removeClass('arrow-right');
+                $(elm).removeClass('dropdown-menu-end');
+				$(elm).parents('.dropdown:first').find('> a.dropdown-toggle > .arrow').removeClass('arrow-end');
             }
+			}
+		}
+    });
+});
+
+// Login-signup dropdown
+	$('.login-signup ul.navbar-nav > li.dropdown > .dropdown-menu').each(function() {
+		var menu = $('#header .header-row').offset();
+		var dropdown = $(this).parent().offset();
+		if ($("html").attr("dir") == 'rtl') {
+			var rd = ($(window).width() - (dropdown.left + $(this).parent().outerWidth()));
+			var i = (rd + $(this).outerWidth()) - (menu.left + $('#header .header-row').outerWidth());
+		}else{
+			var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#header .header-row').outerWidth());
+		}
+		if (i > 0) {
+			if ($("html").attr("dir") == 'rtl') {
+				$(this).css('margin-right', '-' + (i) + 'px');
+			}else{
+				$(this).css('margin-left', '-' + (i) + 'px');
+			}
+		}
+	});
+
+$(function () {
+    $(".login-signup .dropdown li").on('click', function (e) {
+			if ($('.dropdown-menu', this).length) {
+				var elm = $('.dropdown-menu', this);
+				var off = elm.offset();
+				var l = off.left;
+				var w = elm.width();
+				var docW = $(window).width();
+				var lr = ($(window).width() - (off.left + elm.outerWidth())); //offset right
+				if ($("html").attr("dir") == 'rtl') {
+					var isEntirelyVisible = (lr + w + 30 <= docW);
+				}else{
+					var isEntirelyVisible = (l + w + 30 <= docW);
+				}
+				if (!isEntirelyVisible) {
+					$(elm).toggleClass('dropdown-menu-end');
+					$(elm).parents('.dropdown:first').find('> a.dropdown-toggle > .arrow').toggleClass('arrow-end');
+				}
 			}
     });
 });
+
+// DropDown Arrow
+$('.primary-menu, .login-signup').find('a.dropdown-toggle').append($('<i />').addClass('arrow'));
 
 // Mobile Collapse Nav
 $('.primary-menu .dropdown-toggle[href="#"], .primary-menu .dropdown-toggle[href!="#"] .arrow, .login-signup .dropdown-toggle[href="#"], .login-signup .dropdown-toggle[href!="#"] .arrow').on('click', function(e) {
@@ -67,13 +128,10 @@ $('.primary-menu .dropdown-toggle[href="#"], .primary-menu .dropdown-toggle[href
 		$parentli.find('> a .arrow').toggleClass('open');
 	}
 });
-
-// DropDown Arrow
-$('.primary-menu, .login-signup').find('a.dropdown-toggle').append($('<i />').addClass('arrow'));
 	
 // Mobile Menu Button Icon
 $('.navbar-toggler').on('click', function() {
-		$(this).toggleClass('open');
+	$(this).toggleClass('open');
 });
 
 
@@ -162,13 +220,20 @@ $('#flightTravellersClass').on('click', function() {
     });
 });
 
-/*---------------------------------------------------
+/*-------------------------------------------
    Carousel (Owl Carousel)
------------------------------------------------------ */
+--------------------------------------------- */
 $(".owl-carousel").each(function (index) {
     var a = $(this);
+	if ($("html").attr("dir") == 'rtl') {
+		var rtlVal = true
+	}else{
+		var rtlVal = false
+    }
 	$(this).owlCarousel({
+		rtl: rtlVal,
 		autoplay: a.data('autoplay'),
+		center: a.data('center'),
 		autoplayTimeout: a.data('autoplaytimeout'),
 		autoplayHoverPause: a.data('autoplayhoverpause'),
 		loop: a.data('loop'),
@@ -191,22 +256,18 @@ $(".owl-carousel").each(function (index) {
         576:{items: a.data('items-sm'),},
 		768:{items: a.data('items-md'),},
         992:{items: a.data('items-lg'),}
-    }
+        }
     });
 });
 
-// Fixed Bootstrap Multiple Modal Issue
-$('body').on('hidden.bs.modal', function () {
-if($('.modal.show').length > 0)
-{
-    $('body').addClass('modal-open');
-}
-});
 
-/*---------------------------------------------------
+/*------------------------
    tooltips
------------------------------------------------------ */
-$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+-------------------------- */
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
 /*---------------------------------------------------
    Scroll to top

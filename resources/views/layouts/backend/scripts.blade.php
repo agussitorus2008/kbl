@@ -8,4 +8,4 @@
     localStorage.setItem("route_counter_notif", "{{ route('backend.counter_notif') }}");
 </script>
 <script src="{{ asset('js/jquery.slimscroll.min.js') }}"></script>
-@stack('custom-scripts')
+@stack('scripts')

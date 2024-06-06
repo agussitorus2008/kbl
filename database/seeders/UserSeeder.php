@@ -21,13 +21,5 @@ class UserSeeder extends Seeder
         ]);
 
         $admin->assignRole('admin');
-
-        // create user by factory and assign role as customer
-        \App\Models\User::factory()
-            ->count(20)
-            ->create()
-            ->each(function ($user) {
-                $user->assignRole('customer');
-            });
     }
 }

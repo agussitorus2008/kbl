@@ -9,9 +9,9 @@
     <title>Bukti Tiket</title>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900'
         type='text/css'>
-    <link href="{{ asset('users/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('users/vendor/font-awesome/css/all.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('users/css/stylesheet.css') }}" />
+    <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/font-awesome/css/all.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/stylesheet.css') }}" />
 </head>
 
 <body>
@@ -19,7 +19,8 @@
         <div class="row align-items-center">
             <div class="col-sm-12 text-center text-sm-left">
                 <center>
-                    <p><img src="{{ asset('img/logo.png') }}" title="Koperasi Bintang Laguboti" /></p>
+                    <p><img src="{{ asset('img/logo.png') }}" class="img-fluid" title="Koperasi Bintang Laguboti"
+                            height="50" /></p>
                 </center>
             </div>
         </div>
@@ -102,7 +103,7 @@
                 <span class="font-weight-500 text-3">{{ Auth::guard('web')->user()->name }}</span>
             </div>
             <div class="col-sm-4 mb-3 mb-sm-0"> <span class="text-black-50 text-uppercase">Nomor Bangku :</span><br>
-                @foreach ($order->order_details as $item)
+                @foreach ($order->orderDetails as $item)
                     <span class="font-weight-500 text-3">{{ $item->seat_id }}</span>
                 @endforeach
             </div>
@@ -133,9 +134,9 @@
                                 <td class="border-0" width="60%">Tiket</td>
                                 <td class="text-right border-0" width="20%">Rp.
                                     {{ number_format($order->schedule->price, 0, ',', '.') }} x
-                                    {{ $order->order_details->count() }}</td>
+                                    {{ $order->orderDetails->count() }}</td>
                                 <td class="text-right border-0" width="20%">Rp.
-                                    {{ number_format($order->schedule->price * $order->order_details->count(), 0, ',', '.') }}
+                                    {{ number_format($order->schedule->price * $order->orderDetails->count(), 0, ',', '.') }}
                             </tr>
                             @if ($order->coupon)
                                 <tr>
@@ -147,7 +148,7 @@
                                     </td>
                                     <td class="text-right">{{ $order->coupon->discount }}%</td>
                                     <td class="text-right">- Rp.
-                                        {{ number_format(($order->coupon->discount * $order->schedule->price * $order->order_details->count()) / 100, 0, ',', '.') }}
+                                        {{ number_format(($order->coupon->discount * $order->schedule->price * $order->orderDetails->count()) / 100, 0, ',', '.') }}
 
                                 </tr>
                             @endif
@@ -162,6 +163,13 @@
             </div>
         </div>
 
+        <!-- button payment -->
+        @if ($order->status == 'pending')
+            <div class="text-center mt-4">
+                <a href="{{ route('payment', $order->id) }}" class="btn btn-primary btn-rounded btn-lg">Bayar
+                    Sekarang</a>
+            </div>
+        @endif
 
         <p class="text-center text-black-50">**Selalu bawa tiket ini dan tanda pengenal saat keberangkatan</p>
         <hr class="my-4">

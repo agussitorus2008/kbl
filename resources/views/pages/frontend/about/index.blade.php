@@ -1,15 +1,15 @@
 @extends('layouts.frontend.master')
 @section('title', 'Tentang Kami')
 @section('content')
-    <section class="page-header page-header-text-light bg-secondary">
+    <section class="page-header page-header-dark bg-secondary">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1>About Us</h1>
+                    <h1>Tentang Kami</h1>
                 </div>
                 <div class="col-md-4">
                     <ul class="breadcrumb justify-content-start justify-content-md-end mb-0">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ route('home') }}">Home</a></li>
                         <li class="active">About Us</li>
                     </ul>
                 </div>
@@ -20,7 +20,7 @@
         <div class="container">
             <div class="bg-white shadow-md rounded p-4">
                 <h2 class="text-6 mb-3 text-center">Kelompok 3</h2>
-                <div class="row">
+                <div class="row d-flex align-items-stretch">
                     <div class="col-lg-4 col-sm-6 col-md-3">
                         <div class="team">
                             <img class="img-fluid rounded" alt="Horas" src="{{ asset('images/teams/horas.jpg') }}">

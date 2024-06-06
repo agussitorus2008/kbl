@@ -2,8 +2,8 @@
 @section('title', 'Profile')
 @section('content')
     <!-- Page Header
-                    ============================================= -->
-    <section class="page-header page-header-text-light bg-secondary">
+                                                        ============================================= -->
+    <section class="page-header page-header-dark bg-secondary">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
@@ -20,7 +20,7 @@
     <!-- Page Header end -->
 
     <!-- Content
-                  ============================================= -->
+                                                      ============================================= -->
     <div id="content">
         <div class="container">
             <div class="row">
@@ -28,30 +28,30 @@
                 <div class="col-lg-9">
                     <div class="bg-white shadow-md rounded p-4">
                         <!-- Personal Information
-                          ============================================= -->
+                                                              ============================================= -->
                         <h4 class="mb-4">Informasi Pribadi</h4>
                         <hr class="mx-n4 mb-4">
                         <div class="row">
                             <div class="col-lg-8">
                                 <form id="form_input">
-                                    <div class="form-group">
-                                        <label for="fullName">Nama</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="fullName">Nama</label>
                                         <input type="text" value="{{ Auth::user()->name }}" class="form-control"
                                             name="name" id="fullName" placeholder="Full Name">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="emailID">Email</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="emailID">Email</label>
                                         <input type="text" value="{{ Auth::user()->email }}" class="form-control"
                                             name="email" id="emailID" placeholder="Email ID">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="mobileNumber">No Handphone</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="mobileNumber">No Handphone</label>
                                         <input type="text" value="{{ Auth::user()->phone }}" class="form-control"
                                             name="phone" id="mobileNumber" placeholder="Mobile Number">
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="address">Alamat</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="address">Alamat</label>
                                         <input type="text" value="{{ Auth::user()->address }}" class="form-control"
                                             name="address" id="address" placeholder="Alamat">
                                     </div>

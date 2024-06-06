@@ -36,7 +36,7 @@
         </div>
     </div>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <x-chat />
     <script>
         load_list(1);

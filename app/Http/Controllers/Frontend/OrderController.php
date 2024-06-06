@@ -40,8 +40,6 @@ class OrderController extends Controller
     {
         $order->status = 'canceled';
         $order->save();
-        $admin = User::find(1);
-        $admin->notify(new OrderCanceledNotification($order));
 
         return response()->json([
             'status' => 'success',

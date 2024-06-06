@@ -7,7 +7,7 @@
                         <div class="featured-box-icon">
                             <i class="fas fa-lock"></i>
                         </div>
-                        <h3>Aman</h3>
+                        <h3>100% Aman</h3>
                         <p class="text-muted">Kami menjamin keamanan dan kenyamanan anda dalam menggunakan layanan
                             kami.</p>
                     </div>
@@ -24,7 +24,7 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="featured-box text-center">
                         <div class="featured-box-icon"> <i class="far fa-life-ring"></i> </div>
-                        <h3>Bantuan</h3>
+                        <h3>24X7 Bantuan</h3>
                         <p class="text-muted">Kami siap membantu anda dalam menggunakan layanan kami.</p>
                     </div>
                 </div>

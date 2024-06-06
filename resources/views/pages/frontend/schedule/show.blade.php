@@ -8,7 +8,7 @@
     </style>
 @endpush
 @section('content')
-    <section class="page-header page-header-text-light bg-secondary">
+    {{-- <section class="page-header page-header-text-light bg-secondary">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
@@ -22,6 +22,21 @@
                 </div>
             </div>
         </div>
+    </section> --}}
+    <section class="page-header page-header-dark bg-secondary">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1>Detail Jadwal</h1>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb justify-content-start justify-content-md-end mb-0">
+                        <li><a href="{{ route('home') }}">Home</a></li>
+                        <li class="active">Detail Jadwal</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
     <div id="content">
         <div class="container">
@@ -29,10 +44,7 @@
                 <div class="col-lg-8">
                     <div class="bg-white shadow-md rounded p-3 p-sm-4 mb-4">
                         <h2 class="d-flex align-items-center text-7 mb-3 mb-sm-4">Detail
-                            <a href="javascript:;" onclick="load_list(1);" class="btn btn-primary ml-auto">
-                                <i class="fas fa-arrow-circle-left mr-1"></i>
-                                Kembali
-                            </a>
+                            <span class="ml-2">Jadwal</span>
                         </h2>
                         <hr class="mx-n3 mx-sm-n4 mb-4">
                         <div class="row">
@@ -44,80 +56,75 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <span class="mr-1" style="font-size: 20px;">Nama Supir</span>
+                                            <span class="mr-1">Nama Supir</span>
                                         </td>
                                         <td>
-                                            <span class="ml-1" style="font-size: 20px;">:</span>
+                                            <span class="ml-1">:</span>
                                         </td>
                                         <td>
-                                            <span class="ml-1"
-                                                style="font-size: 20px;">{{ $schedule->car->driver->name }}</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span class="mr-1" style="font-size: 20px;">No. Telp</span>
-                                        </td>
-                                        <td>
-                                            <span class="ml-1" style="font-size: 20px;">:</span>
-                                        </td>
-                                        <td>
-                                            <span class="ml-1"
-                                                style="font-size: 20px;">{{ $schedule->car->driver->phone }}</span>
+                                            <span class="ml-1">{{ $schedule->car->driver->name }}</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="mr-1" style="font-size: 20px;">Alamat</span>
+                                            <span class="mr-1">No. Telp</span>
                                         </td>
                                         <td>
-                                            <span class="ml-1" style="font-size: 20px;">:</span>
+                                            <span class="ml-1">:</span>
                                         </td>
                                         <td>
-                                            <span class="ml-1"
-                                                style="font-size: 20px;">{{ $schedule->car->driver->address }}</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span class="mr-1" style="font-size: 20px;">No. Plat</span>
-                                        </td>
-                                        <td>
-                                            <span class="ml-1" style="font-size: 20px;">:</span>
-                                        </td>
-                                        <td>
-                                            <span class="ml-1"
-                                                style="font-size: 20px;">{{ $schedule->car->plate_number }}</span>
+                                            <span class="ml-1">{{ $schedule->car->driver->phone }}</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="mr-1" style="font-size: 20px;">No. Mobil</span>
+                                            <span class="mr-1">Alamat</span>
                                         </td>
                                         <td>
-                                            <span class="ml-1" style="font-size: 20px;">:</span>
+                                            <span class="ml-1">:</span>
                                         </td>
                                         <td>
-                                            <span class="ml-1"
-                                                style="font-size: 20px;">{{ $schedule->car->car_number }}</span>
+                                            <span class="ml-1">{{ $schedule->car->driver->address }}</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="mr-1" style="font-size: 20px;">Tipe</span>
+                                            <span class="mr-1">No. Plat</span>
                                         </td>
                                         <td>
-                                            <span class="ml-1" style="font-size: 20px;">:</span>
+                                            <span class="ml-1">:</span>
+                                        </td>
+                                        <td>
+                                            <span class="ml-1">{{ $schedule->car->plate_number }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="mr-1">No. Mobil</span>
+                                        </td>
+                                        <td>
+                                            <span class="ml-1">:</span>
+                                        </td>
+                                        <td>
+                                            <span class="ml-1">{{ $schedule->car->car_number }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="mr-1">Tipe</span>
+                                        </td>
+                                        <td>
+                                            <span class="ml-1">:</span>
                                         </td>
                                         <td>
                                             @if ($schedule->car->type == 'bus')
-                                                <span class="ml-1" style="font-size: 20px;">Bus
+                                                <span class="ml-1">Bus
                                                 </span>
                                             @elseif ($schedule->car->type == 'minibus')
-                                                <span class="ml-1" style="font-size: 20px;">Minibus
+                                                <span class="ml-1">Minibus
                                                 </span>
                                             @else
-                                                <span class="ml-1" style="font-size: 20px;">Mobil
+                                                <span class="ml-1">Mobil
                                                 </span>
                                             @endif
                                         </td>
@@ -201,10 +208,12 @@
                                 <span class="text-dark">{{ $schedule->available_seats }}</span>
                             </li>
                         </ul>
-                        <div class="text-dark text-4 font-weight-500 py-4 border-top">Harga
-                            <span class="float-right text-9">Rp. {{ number_format($schedule->price) }}</span>
+                        <hr>
+                        <div class="text-dark text-4 fw-500 my-4">Harga
+                            <span class="float-end text-9">Rp. {{ number_format($schedule->price) }}</span>
                         </div>
                         @auth
+                            <hr>
                             <a href="javascript:;"
                                 onclick="handle_open_modal('{{ route('schedule.input', $schedule->id) }}','#modalListResult','#contentListResult');"
                                 class="btn btn-sm btn-block btn-primary mt-3">

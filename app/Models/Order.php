@@ -9,16 +9,6 @@ class Order extends Model
 {
     use HasFactory;
 
-    // protected static function booted()
-    // {
-    //     parent::boot();
-
-    //     static::creating(function ($order) {
-    //         $order->code = 'ORDER-' . time();
-    //         $order->user_id = auth()->user()->id;
-    //     });
-    // }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -31,6 +21,8 @@ class Order extends Model
         'code',
         'total',
         'status',
+        'snap_token',
+        'payment_status',
     ];
 
     /**
@@ -83,7 +75,7 @@ class Order extends Model
      */
     public function user()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

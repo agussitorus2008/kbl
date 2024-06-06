@@ -69,7 +69,7 @@
         <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10" id="content_detail"></div>
     </div>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script>
         function load_data(keyword) {
             $.ajax({

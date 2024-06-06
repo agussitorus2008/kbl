@@ -1,11 +1,18 @@
 @extends('layouts.frontend.master')
 @section('title', 'Konfirmasi Pemesanan')
 @section('content')
-    <section class="page-header page-header-text-light bg-secondary">
+    <section class="page-header page-header-dark bg-secondary">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h1>Konfirmasi Pesanan</h1>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb justify-content-start justify-content-md-end mb-0">
+                        <li><a href="{{ route('home') }}">Home</a></li>
+                        <li><a href="{{ route('schedule') }}">Booking</a></li>
+                        <li class="active">Konfirmasi</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -19,7 +26,7 @@
             <section class="container">
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="bg-light shadow-md rounded p-3 p-sm-4 confirm-details">
+                        <div class="bg-white shadow-md rounded p-3 p-sm-4 confirm-details">
                             <h2 class="text-6 mb-3">Konfirmasi Detail Pesanan</h2>
                             <div class="card">
                                 <div class="card-header">
@@ -27,7 +34,8 @@
                                         <div class="col-5 col-sm-auto text-center text-sm-left">
                                             <h5 class="m-0 trip-place">Medan</h5>
                                         </div>
-                                        <div class="col-2 col-sm-auto text-8 text-black-50 text-center trip-arrow">➝</div>
+                                        <div class="col-2 col-sm-auto text-8 text-black-50 text-center trip-arrow">➝
+                                        </div>
                                         <div class="col-5 col-sm-auto text-center text-sm-left">
                                             <h5 class="m-0 trip-place">Laguboti</h5>
                                         </div>
@@ -74,7 +82,7 @@
                                         </div>
                                         <div class="col-12 mt-3 text-dark seats">No Bangku:
                                             @for ($i = 0; $i < $seats_count; $i++)
-                                                <span class="badge badge-success py-1 px-2 font-weight-normal text-1 seat"
+                                                <span class="badge bg-success py-1 px-2 font-weight-normal text-1 seat"
                                                     id="{{ $seats[$i] }}">{{ $seats[$i] }}</span>
                                             @endfor
                                         </div>
@@ -86,34 +94,30 @@
                     </div>
 
                     <aside class="col-lg-4 mt-4 mt-lg-0">
-                        <div class="bg-light shadow-md rounded p-3">
+                        <div class="bg-white shadow-md rounded p-3">
                             <h3 class="text-5 mb-3">Biaya Perjalanan</h3>
-                            <div class="bg-light-2 rounded p-4 mb-4">
-                                <h3 class="text-4 mb-4">Total Biaya</h3>
-                                <ul class="list-unstyled">
-                                    <li class="mb-2">Total
-                                        <span class="float-right text-4 font-weight-500 text-dark price"
-                                            data-price="{{ $schedule->price }}"></span>
-                                    </li>
-                                    <li class="mb-2 discount"></li>
-                                </ul>
-                                <hr class="mx-n4">
-                                <div class="text-dark text-4 font-weight-500 py-1"> Total
-                                    <span class="float-right text-7 total"></span>
-                                </div>
+                            <hr class="mx-n3">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">Harga <span class="float-end text-4 fw-500 text-dark price"
+                                        data-price="{{ $schedule->price }}"></span>
+                                </li>
+                                <li class="mb-2">Discount <span class="float-end text-4 fw-500 text-dark discount"></span>
+                                </li>
+                            </ul>
+                            <div class="text-dark bg-light-4 text-4 fw-600 p-3"> Total
+                                <span class="float-right text-6 btn-total"></span>
                             </div>
-                            <div class="input-group form-group">
+                            <h3 class="text-4 mb-3 mt-4">Promo Code</h3>
+                            <div class="input-group form-group mb-3">
                                 <input class="form-control" name="coupon" placeholder="Promo Code" aria-label="Promo Code"
                                     type="text">
-                                <span class="input-group-append">
-                                    <a href="javascript:;" id="tombol_apply" class="btn btn-secondary"
-                                        onclick="check('#tombol_apply', 'APPLY');">APPLY</a>
-                                </span>
+                                <button class="btn btn-secondary shadow-none px-3" type="button" id="tombol_apply"
+                                    onclick="check('#tombol_apply', 'APPLY');">APPLY</button>
                             </div>
-                            <a href="javascript:;" onclick="payment('#tombol_payment');" id="tombol_payment"
-                                class="btn btn-primary btn-block">
-                                Buat Pesanan
-                            </a>
+                            <div class="d-grid">
+                                <button class="btn btn-primary" onclick="payment('#tombol_payment');" id="tombol_payment"
+                                    type="button">Buat Pesanan</button>
+                            </div>
                         </div>
                     </aside>
                 </div>
@@ -121,7 +125,7 @@
         </div>
     </form>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script>
         var seats = [];
         var price = 0;
