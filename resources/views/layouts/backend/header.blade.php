@@ -3,7 +3,7 @@
     <div class="header-brand">
         <!--begin::Logo-->
         <a href="{{ route('home') }}" class="logo">
-            <img alt="Logo" src="{{ asset('img/logo.svg') }}" class="h-25px h-lg-25px" />
+            <img alt="Logo" src="{{ asset('img/logo.png') }}" class="h-40px h-lg-40px" />
         </a>
         <!--end::Logo-->
         <!--begin::Aside minimize-->
