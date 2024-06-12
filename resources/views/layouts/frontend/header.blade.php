@@ -26,15 +26,15 @@
             </div>
 
             {{-- Tombol Navigasi --}}
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#header-nav">
-                <span></span>
-                <span></span> <span></span> </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header-nav">
+                <span></span> <span></span> <span></span> </button>
+            <div class="vr mx-2 h-25 my-auto"></div>
             @auth
                 {{-- MENU --}}
                 <nav class="login-signup navbar navbar-expand separator">
                     <ul class="navbar-nav">
                         <li class="profile dropdown {{ request()->is('profile') ? 'active' : '' }}">
-                            <a class="pr-0 dropdown-toggle" href="#" title="My Profile">
+                            <a class="pe-0 dropdown-toggle" href="#" title="My Profile">
                                 <span class="d-none d-sm-inline-block">{{ Auth::user()->name }}</span>
                                 <span class="user-icon ms-sm-2">
                                     <i class="fas fa-user"></i>
@@ -74,15 +74,13 @@
                         </li>
                     </ul>
                 </nav>
-                {{-- NOTIFICATION --}}
-                <nav class="navbar navbar-expand separator">
+                <nav class="ms-2">
                     <div id="top-notification" class="dropdown">
-                        <a class="nav-link dropdown-toggle" href="javascript:;" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="fas fa-bell"></i>
-                            <span class="badge badge-danger" id="top-notification-number">0</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        <button type="button" class="icon-button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="material-icons">notifications</span>
+                            <span class="icon-button__badge" id="top-notification-number"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px; max-width: 350px;">
                             <div class="dropdown-header">Notifikasi</div>
                             <div class="dropdown-divider"></div>
                             <div class="scroll" id="notification_items">
@@ -94,15 +92,11 @@
             @endauth
             @guest
                 {{-- AUTHENTIKASI --}}
-                <nav class="login-signup navbar navbar-expand separator pl-sm-2">
+                <nav class="login-signup navbar navbar-expand separator">
                     <ul class="navbar-nav">
-                        <li class="profile">
-                            <a class="pr-0" href="{{ route('login') }}" title="Login / Sign up">
-                                <span class="d-none d-sm-inline-block">Masuk / Daftar</span>
-                                <span class="user-icon ms-sm-2"><i class="fas fa-user"></i>
-                                </span>
-                            </a>
-                        </li>
+                        <li><a href="{{ route('login') }}">Login</a> </li>
+                        <li class="align-items-center h-auto ms-sm-2"><a class="btn btn-sm btn-primary"
+                                href="{{ route('register') }}">Sign Up</a></li>
                     </ul>
                 </nav>
             @endguest
