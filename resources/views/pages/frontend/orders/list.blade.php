@@ -15,25 +15,25 @@
                 <td class="align-middle">{{ $order->code }}</td>
                 <td class="align-middle">
                     @if ($order->schedule->route == 'ML')
-                        <span class="badge badge-primary">Perjalanan Medan - Laguboti</span>
+                        <span class="badge bg-primary">Perjalanan Medan - Laguboti</span>
                     @elseif($order->schedule->route == 'LM')
-                        <span class="badge badge-primary">Perjalanan Laguboti - Medan</span>
+                        <span class="badge bg-primary">Perjalanan Laguboti - Medan</span>
                     @elseif($order->schedule->route == 'LS')
-                        <span class="badge badge-primary">Perjalanan Laguboti - Sibolga</span>
+                        <span class="badge bg-primary">Perjalanan Laguboti - Sibolga</span>
                     @elseif($order->schedule->route == 'SL')
-                        <span class="badge badge-primary">Perjalanan Sibolga - Laguboti</span>
+                        <span class="badge bg-primary">Perjalanan Sibolga - Laguboti</span>
                     @endif
                 </td>
                 <td class="align-middle">{{ $order->schedule->departure_time }}</td>
                 <td class="align-middle text-center">
                     @if ($order->status == 'pending')
-                        <span class="badge badge-warning">Menunggu</span>
+                        <span class="badge bg-warning">Menunggu</span>
                     @elseif($order->status == 'booked')
-                        <span class="badge badge-success">Dipesan</span>
+                        <span class="badge bg-success">Dipesan</span>
                     @elseif($order->status == 'canceled')
-                        <span class="badge badge-danger">Dibatalkan</span>
+                        <span class="badge bg-danger">Dibatalkan</span>
                     @elseif($order->status == 'rejected')
-                        <span class="badge badge-danger">Ditolak</span>
+                        <span class="badge bg-danger">Ditolak</span>
                     @endif
                 <td class="align-middle text-right">Rp. {{ number_format($order->total) }}</td>
                 <td class="align-middle text-center">

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DriverController extends Controller
 {
@@ -65,7 +66,7 @@ class DriverController extends Controller
     {
         $validators = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'phone' => 'required|numeric|unique:drivers',
+            'phone' => ['required', 'numeric', Rule::unique('drivers')->whereNull('deleted_at'), 'regex:/^(08)[0-9]{9,12}$/'],
             'address' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], $this->messages);
@@ -131,7 +132,7 @@ class DriverController extends Controller
     {
         $validators = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'phone' => 'required|numeric|unique:drivers,phone,' . $driver->id,
+            'phone' => ['required', 'numeric', Rule::unique('drivers')->ignore($driver->id)->whereNull('deleted_at'), 'regex:/^(08)[0-9]{9,12}$/'],
             'address' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], $this->messages);

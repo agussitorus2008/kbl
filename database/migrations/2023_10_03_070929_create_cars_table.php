@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('driver_id')->constrained('drivers')->onDelete('cascade');
             $table->integer('capacity');
-            $table->integer('car_number')->unique();
-            $table->string('plate_number')->unique();
+            $table->integer('car_number');
+            $table->string('plate_number');
             $table->enum('type', ['executive', 'non-executive']);
             $table->string('image');
             $table->timestamps();

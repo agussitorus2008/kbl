@@ -239,23 +239,6 @@
                     <!--end:Menu link-->
                 </div>
                 <!--end:Menu item-->
-                <!--begin:Menu item-->
-                <div class="menu-item">
-                    <!--begin:Menu link-->
-                    <a class="menu-link {{ request()->is('backend/agents/*') || request()->is('backend/agents') ? 'active' : '' }}"
-                        href="{{ route('backend.agents.index') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <i class="fas fa-user-tie fs-2"></i>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Agents</span>
-                    </a>
-                    <!--end:Menu link-->
-                </div>
-                <!--end:Menu item-->
             </div>
             <!--end::Menu-->
         </div>

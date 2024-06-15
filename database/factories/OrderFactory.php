@@ -17,11 +17,9 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         $users = \App\Models\User::all();
-        $schedules = \App\Models\Schedule::all();
         $coupons = \App\Models\Coupon::all();
         return [
             'user_id' => $this->faker->randomElement($users),
-            'schedule_id' => $this->faker->randomElement($schedules),
             'coupon_id' => $this->faker->randomElement($coupons),
             'code' => $this->faker->unique()->randomNumber(6),
             'total' => $this->faker->numberBetween(100000, 200000),

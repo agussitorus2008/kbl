@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Coupon;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

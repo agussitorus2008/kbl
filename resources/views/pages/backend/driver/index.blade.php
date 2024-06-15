@@ -97,7 +97,8 @@
             $('#datatables').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: columns: [{
+                ajax: "{{ route('backend.drivers.index') }}",
+                columns: [{
                         data: 'name',
                         name: 'name'
                     },

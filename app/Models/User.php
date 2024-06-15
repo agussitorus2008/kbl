@@ -99,4 +99,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Chat::class);
     }
+
+    /**
+     * Get all of the coupons for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function coupons(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Coupon::class);
+    }
 }

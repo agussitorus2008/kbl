@@ -28,8 +28,7 @@ class CouponController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $coupons = Coupon::with('user')
-                ->get();
+            $coupons = Coupon::with('user');
             return DataTables::of($coupons)
                 ->addColumn('user_name', function ($coupon) {
                     return $coupon->user->name;

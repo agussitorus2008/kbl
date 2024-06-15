@@ -27,35 +27,3 @@ use App\Http\Controllers\Api\ScheduleController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
-// AUTH
-Route::name('auth.')->group(function () {
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-    Route::post('login', [AuthController::class, 'login'])->name('login');
-    Route::post('register', [AuthController::class, 'register'])->name('register');
-});
-
-// DRIVER RESOURCE API
-Route::apiResource('drivers', DriverController::class)->only(['index', 'show']);
-// CAR RESOURCE API
-Route::apiResource('cars', CarController::class)->only(['index', 'show']);
-// SCHEDULE RESOURCE API
-Route::apiResource('schedules', ScheduleController::class)->only(['index', 'show']);
-// AGENT RESOURCE API
-Route::apiResource('agents', AgentController::class)->only(['index', 'show']);
-// ORDER RESOURCE API
-Route::apiResource('orders', OrderController::class)->only(['index', 'show']);
-// COUPON RESOURCE API
-Route::apiResource('coupons', CouponController::class)->only(['index', 'show']);
-
-// CHAT API
-Route::get('chats', [ChatController::class, 'index'])->name('chats.index');
-Route::get('chats/{id}', [ChatController::class, 'show'])->name('chats.show');
-Route::post('chats/store', [ChatController::class, 'store'])->name('chats.store');
-
-// CHECKOUT API
-Route::post('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
-Route::post('checkout/confirm', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
-Route::post('checkout/coupon', [CheckoutController::class, 'check_coupon'])->name('checkout.coupon');
-Route::post('checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');

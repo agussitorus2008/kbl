@@ -5,7 +5,7 @@
                 <!-- Logo -->
                 <div class="logo">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('img/logo.png') }}" alt="KBL" height="50">
+                        <img src="{{ asset('img/logo.png') }}" alt="KBL" width="200">
                     </a>
                 </div>
                 <!-- Logo end -->
@@ -92,7 +92,7 @@
             @endauth
             @guest
                 {{-- AUTHENTIKASI --}}
-                <nav class="login-signup navbar navbar-expand separator">
+                <nav class="login-signup navbar navbar-expand separator ms-sm-0">
                     <ul class="navbar-nav">
                         <li><a href="{{ route('login') }}">Login</a> </li>
                         <li class="align-items-center h-auto ms-sm-2"><a class="btn btn-sm btn-primary"

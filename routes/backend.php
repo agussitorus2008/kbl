@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\AgentController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\DriverController;
+use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\ScheduleController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\NotificationController;
@@ -25,8 +26,6 @@ Route::name('backend.')->group(function () {
     // SCHEDULE
     Route::resource('schedules', ScheduleController::class);
 
-    // AGENT
-    Route::resource('agents', AgentController::class);
     // ORDER
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
     Route::patch('orders/approve/{order}', [OrderController::class, 'approve'])->name('orders.approve');

@@ -52,7 +52,8 @@
             </div>
         </div>
     </div>
-@section('custom_js')
+@endsection
+@push('scripts')
     <script>
         $(document).ready(function() {
             $('#datatables').DataTable({
@@ -60,8 +61,8 @@
                 serverSide: true,
                 ajax: '{{ route('backend.orders.index') }}',
                 columns: [{
-                        data: 'name',
-                        name: 'name'
+                        data: 'user.name',
+                        name: 'user.name'
                     },
                     {
                         data: 'code',
@@ -105,5 +106,4 @@
             });
         });
     </script>
-@endsection
-@endsection
+@endpush

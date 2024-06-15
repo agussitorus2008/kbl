@@ -33,7 +33,7 @@ class ScheduleController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $schedules = Schedule::with('car.driver')->get();
+            $schedules = Schedule::with('car.driver');
 
             return DataTables::of($schedules)
                 ->addColumn('driver_name', function ($schedule) {
@@ -98,8 +98,8 @@ class ScheduleController extends Controller
         $validators = Validator::make($request->all(), [
             'car_id' => 'required|exists:cars,id',
             'route' => 'required',
-            'departure_time' => 'required|date_format:Y-m-d H:i:s',
-            'arrival_time' => 'required|date_format:Y-m-d H:i:s',
+            'departure_time' => ['required', 'date_format:Y-m-d H:i', 'after:now'],
+            'arrival_time' => ['required', 'date_format:Y-m-d H:i', 'after:departure_time'],
             'price' => 'required|integer|min:1',
         ], $this->messages);
 
@@ -110,7 +110,6 @@ class ScheduleController extends Controller
             ]);
         }
 
-        $car = Car::find($request->car_id);
         $schedule = Schedule::create([
             'car_id' => $request->car_id,
             'route' => $request->route,
@@ -158,8 +157,8 @@ class ScheduleController extends Controller
         $validators = Validator::make($request->all(), [
             'car_id' => 'required|exists:cars,id',
             'route' => 'required',
-            'departure_time' => 'required|date_format:Y-m-d H:i:s',
-            'arrival_time' => 'required|date_format:Y-m-d H:i:s',
+            'departure_time' => ['required', 'date_format:Y-m-d H:i', 'after:now'],
+            'arrival_time' => ['required', 'date_format:Y-m-d H:i', 'after:departure_time'],
             'price' => 'required|integer|min:1',
         ], $this->messages);
 
@@ -169,8 +168,6 @@ class ScheduleController extends Controller
                 'message' => $validators->errors()->first(),
             ]);
         }
-
-        $car = Car::find($request->car_id);
 
         $schedule->update([
             'car_id' => $request->car_id,

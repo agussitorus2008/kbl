@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Car;
 use App\Models\Driver;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
@@ -81,11 +82,11 @@ class CarController extends Controller
     public function store(Request $request)
     {
         $validators = Validator::make($request->all(), [
-            'driver_id' => 'required|exists:drivers,id|unique:cars,driver_id',
+            'driver_id' => ['required', 'exists:drivers,id', Rule::unique('cars')->whereNull('deleted_at')],
             'type' => 'required',
             'capacity' => 'required|integer|min:1',
-            'car_number' => 'required|string|max:255|unique:cars',
-            'plate_number' => 'required|string|max:255|unique:cars',
+            'car_number' => ['required', 'string', 'max:255', Rule::unique('cars')->whereNull('deleted_at')],
+            'plate_number' => ['required', 'string', 'max:255', Rule::unique('cars')->whereNull('deleted_at')],
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], $this->messages);
 
@@ -151,11 +152,11 @@ class CarController extends Controller
     public function update(Request $request, Car $car)
     {
         $validators = Validator::make($request->all(), [
-            'driver_id' => 'required|exists:drivers,id|unique:cars,driver_id,' . $car->id,
+            'driver_id' => ['required|exists:drivers,id', Rule::unique('cars')->ignore($car->id)->whereNull('deleted_at')],
             'type' => 'required',
             'capacity' => 'required|integer|min:1',
-            'car_number' => 'required|string|max:255|unique:cars,car_number,' . $car->id,
-            'plate_number' => 'required|string|max:255|unique:cars,plate_number,' . $car->id,
+            'car_number' => ['required', 'string', 'max:255', Rule::unique('cars')->ignore($car->id)->whereNull('deleted_at')],
+            'plate_number' => ['required', 'string', 'max:255', Rule::unique('cars')->ignore($car->id)->whereNull('deleted_at')],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], $this->messages);
 

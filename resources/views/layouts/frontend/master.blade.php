@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
     <meta name="author" content="{{ config('app.name') }}" />
     <meta name="keyword" content="{{ $keyword ?? config('app.name') }}" />
-    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" />
+    <meta name="description" content="{{ $description ?? config('app.name') }}" />
+    {{-- <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" /> --}}
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}">
     @include('layouts.frontend.head')
 </head>
 

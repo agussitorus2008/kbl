@@ -57,6 +57,7 @@ Route::post('password/reset', [AuthController::class, 'do_reset'])->name('passwo
 Route::get('password/change', [AuthController::class, 'change'])->name('password.change');
 Route::get('about', fn () => view('pages.frontend.about.index'))->name('about');
 Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
+Route::get('logout', [AuthController::class, 'do_logout'])->name('logout')->middleware('auth');
 
 Route::middleware(['auth', 'verified', 'role:customer'])->group(function () {
     // PROFILE
@@ -98,6 +99,4 @@ Route::middleware(['auth', 'verified', 'role:customer'])->group(function () {
     // CHAT
     Route::get('chat', [ChatController::class, 'index'])->name('chat.index');
     Route::post('chat', [ChatController::class, 'store'])->name('chat.send');
-
-    Route::get('logout', [AuthController::class, 'do_logout'])->name('logout');
 });

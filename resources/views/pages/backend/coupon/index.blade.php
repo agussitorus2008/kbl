@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
-@section('title', 'Agents')
-@section('page', 'Agents')
+@section('title', 'Coupons')
+@section('page', 'Coupons')
 @section('breadcrumb')
     <!--begin::Breadcrumb-->
     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
@@ -18,7 +18,7 @@
 
         <!--begin::Item-->
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('backend.agents.index') }}" class="text-muted text-hover-primary">Agents</a>
+            <a href="{{ route('backend.coupons.index') }}" class="text-muted text-hover-primary">Coupons</a>
         </li>
         <!--end::Item-->
         <!--begin::Item-->
@@ -29,7 +29,7 @@
 
         <!--begin::Item-->
         <li class="breadcrumb-item text-dark">
-            All Agents
+            All Coupons
         </li>
         <!--end::Item-->
     </ul>
@@ -63,7 +63,7 @@
                         <!--end::Search-->
                         <div class="card-toolbar">
                             <div class="d-flex justify-content-end">
-                                <a href="{{ route('backend.agents.create') }}" class="btn btn-primary">Tambah
+                                <a href="{{ route('backend.coupons.create') }}" class="btn btn-primary">Tambah
                                     Data</a>
                             </div>
                         </div>
