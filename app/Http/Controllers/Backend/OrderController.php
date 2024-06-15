@@ -3,16 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Order;
-use App\Models\Coupon;
-use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
-use App\Notifications\NewCouponNotification;
-use App\Notifications\ApprovedOrderNotification;
-use App\Notifications\RejectedOrderNotification;
 
 class OrderController extends Controller
 {
@@ -40,22 +34,7 @@ class OrderController extends Controller
                 ->addColumn('created_at', function ($order) {
                     return Carbon::parse($order->created_at)->translatedFormat('d F Y');
                 })
-                ->addColumn('action', function ($collection) {
-                    if ($collection->status == 'pending' || $collection->status == 'cancled') {
-                        return '
-                        <div class="btn-group" role="group">
-                            <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PATCH\',\'' . route('backend.orders.approve', $collection->id) . '\');"
-                            class="btn btn-sm btn-success">
-                                <i class="fa fa-check"></i>
-                            </a>
-                            <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PATCH\',\'' . route('backend.orders.reject', $collection->id) . '\');"
-                                class="btn btn-sm btn-danger">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>';
-                    }
-                })
-                ->rawColumns(['action', 'status'])
+                ->rawColumns(['status'])
                 ->make(true);
         }
 

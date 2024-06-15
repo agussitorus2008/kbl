@@ -28,8 +28,6 @@ Route::name('backend.')->group(function () {
 
     // ORDER
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::patch('orders/approve/{order}', [OrderController::class, 'approve'])->name('orders.approve');
-    Route::patch('orders/reject/{order}', [OrderController::class, 'reject'])->name('orders.reject');
 
     // COUPON
     Route::resource('coupons', CouponController::class);
