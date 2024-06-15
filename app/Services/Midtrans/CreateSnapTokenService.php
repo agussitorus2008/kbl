@@ -26,7 +26,7 @@ class CreateSnapTokenService extends Midtrans
                 [
                     'id' => $this->order->id,
                     'price' => $this->order->schedule->price,
-                    'quantity' =>  1,
+                    'quantity' => $this->order->orderDetails ? $this->order->orderDetails->count() : 1,
                     'name' => 'Tiket' . $this->order->schedule->route,
                 ]
             ],
