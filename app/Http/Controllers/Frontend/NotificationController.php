@@ -70,12 +70,12 @@ class NotificationController extends Controller
         } else {
             $output .= '
             <a class="dropdown-item" href="javascript:;">
-                <div class="notification-content">
+                <div class="flex align-items-center">
                     <i class="fas fa-info-circle text-info"></i>
-                    <div class="notification-text">
+                    <span class="notification-text">
                         <strong>KBL</strong> Tidak ada notifikasi
                         <br>
-                    </div>
+                    </span>
                 </div>
             </a>
             ';

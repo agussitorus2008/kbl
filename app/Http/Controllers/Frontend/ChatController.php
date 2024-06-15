@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +36,11 @@ class ChatController extends Controller
             ]);
         }
 
+        $userId = User::role('admin')->first()->id;
+
         $chat = Chat::create([
             'message' => $request->message,
-            'sent_to' => $request->sent_to,
+            'sent_to' => $userId,
         ]);
 
         return response()->json([

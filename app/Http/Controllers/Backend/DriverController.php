@@ -92,7 +92,7 @@ class DriverController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'address' => $request->address,
-            'image' => $image_name,
+            'image' => asset('images/drivers/' . $image_name),
         ]);
 
         if ($driver) {
@@ -156,7 +156,7 @@ class DriverController extends Controller
                 mkdir(public_path('images/drivers'), 0777, true);
             }
             $image_resize->save(public_path('images/drivers/' . $image_name));
-            $driver->image = $image_name;
+            $driver->image = asset('images/drivers/' . $image_name);
         }
 
         $driver->name = $request->name;

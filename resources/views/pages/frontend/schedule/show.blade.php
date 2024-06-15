@@ -49,8 +49,7 @@
                         <hr class="mx-n3 mx-sm-n4 mb-4">
                         <div class="row">
                             <div class="col-md-5">
-                                <img class="img-fluid align-top"
-                                    src="{{ asset('images/drivers/' . $schedule->car->driver->image) }}" alt="drivers">
+                                <img class="img-fluid align-top" src="{{ $schedule->car->driver->image }}" alt="drivers">
                             </div>
                             <div class="col-md-7 mt-3 mt-md-0">
                                 <table>

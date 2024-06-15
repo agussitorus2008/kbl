@@ -66,7 +66,7 @@
                                     </a>
                                 </li>
                                 <li class="dropdown-divider mx-n3"></li>
-                                <li><a class="dropdown-item" href="{{ route('auth.logout') }}">
+                                <li><a class="dropdown-item" href="{{ route('logout') }}">
                                         <i class="fas fa-sign-out-alt"></i>Keluar
                                     </a>
                                 </li>
@@ -76,14 +76,16 @@
                 </nav>
                 <nav class="ms-2">
                     <div id="top-notification" class="dropdown">
-                        <button type="button" class="icon-button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="icon-button" data-bs-toggle="dropdown" aria-expanded="false"
+                            onclick="load_notif('{{ route('notification') }}')">
                             <span class="material-icons">notifications</span>
                             <span class="icon-button__badge" id="top-notification-number"></span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px; max-width: 350px;">
                             <div class="dropdown-header">Notifikasi</div>
                             <div class="dropdown-divider"></div>
-                            <div class="scroll" id="notification_items">
+                            <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
+                                id="notification_items">
 
                             </div>
                         </div>

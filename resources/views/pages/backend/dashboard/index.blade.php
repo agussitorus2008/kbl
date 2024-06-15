@@ -990,4 +990,101 @@
                 KTChartsWidget10.init()
             }));
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#schedules_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('admin.schedule.index') }}",
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        defaultContent: '',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'driver_name',
+                        name: 'driver_name',
+                    },
+                    {
+                        data: 'route',
+                        name: 'route'
+                    },
+                    {
+                        data: 'departure_time',
+                        name: 'departure_time'
+                    },
+                    {
+                        data: 'price',
+                        name: 'price'
+                    },
+                ],
+            });
+
+            $('#orders_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('admin.order.index') }}",
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        defaultContent: '',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'code',
+                        name: 'code'
+                    },
+                    {
+                        data: 'departure_time',
+                        name: 'departure_time'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
+                    }
+                ],
+            });
+
+            $('#schedules_table').on('order.dt search.dt', function() {
+                $('#schedules_table').DataTable().column(0, {
+                    search: 'applied',
+                    order: 'applied'
+                }).nodes().each(function(cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            });
+
+            $('#orders_table').on('order.dt search.dt', function() {
+                $('#orders_table').DataTable().column(0, {
+                    search: 'applied',
+                    order: 'applied'
+                }).nodes().each(function(cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            });
+
+            $('input[name="orders"]').on('keyup', function() {
+                $('#orders_table').DataTable().search($(this).val()).draw();
+            });
+
+            $('select[name="status"]').on('change', function() {
+                $('#orders_table').DataTable().columns(4).search($(this).val()).draw();
+            });
+
+            $('input[name="schedules"]').on('keyup', function() {
+                $('#schedules_table').DataTable().search($(this).val()).draw();
+            });
+
+        });
+    </script>
 @endpush

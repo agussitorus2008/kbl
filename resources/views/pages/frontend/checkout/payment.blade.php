@@ -2,7 +2,7 @@
 @section('title', 'Bayar Tiket')
 @section('content')
     <!-- Page Header
-                                                                                                                                                                                                                                      ============================================= -->
+                                                                                                                                                                                                                                          ============================================= -->
     <section class="page-header page-header-dark bg-secondary">
         <div class="container">
             <div class="row align-items-center">
@@ -21,7 +21,7 @@
     <!-- Page Header end -->
 
     <!-- Content
-                                                                                                                                                                                                                                    ============================================= -->
+                                                                                                                                                                                                                                        ============================================= -->
     <div id="content">
         <div class="container">
             <div class="bg-white shadow-md rounded p-4">
@@ -74,7 +74,7 @@
                 e.preventDefault();
                 snap.pay('{{ $order->snap_token }}', {
                     onSuccess: function(result) {
-                        window.location.href = "{{ route('order.success', $order->id) }}";
+                        window.location.href = "{{ route('success', $order->id) }}";
                     },
                     onPending: function(result) {
                         location.reload();

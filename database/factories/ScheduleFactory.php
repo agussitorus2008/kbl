@@ -20,7 +20,7 @@ class ScheduleFactory extends Factory
         $cars = Car::all()->pluck('id')->toArray();
         return [
             'car_id' => $this->faker->randomElement($cars),
-            'route' => $this->faker->word(),
+            'route' => $this->faker->randomElement(['ML', 'LM', 'LS', 'SL']),
             'departure_time' => $this->faker->dateTime(),
             'arrival_time' => $this->faker->dateTime(),
             'price' => $this->faker->numberBetween(100000, 1000000),

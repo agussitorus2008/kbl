@@ -83,7 +83,6 @@ class DashboardController extends Controller
                 ->where('created_at', '<=', now()->subDays($i + 1)->endOfDay())
                 ->count());
         }
-        // dd($executiveData);
 
         // Mengisi array label
         for ($i = 0; $i < 30; $i++) {

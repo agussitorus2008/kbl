@@ -21,7 +21,7 @@
             <div class="row">
 
                 <!-- Side Panel
-                                                          ============================================= -->
+                                                              ============================================= -->
                 <aside class="col-md-3">
                     <div class="bg-light shadow-md rounded p-3">
                         <h3 class="text-5">Filter</h3>

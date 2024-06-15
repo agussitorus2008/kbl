@@ -112,7 +112,7 @@ class CarController extends Controller
             'capacity' => $request->capacity,
             'car_number' => $request->car_number,
             'plate_number' => $request->plate_number,
-            'image' => $image_name,
+            'image' => asset('images/cars/' . $image_name),
         ]);
 
         if ($car) {
@@ -179,6 +179,9 @@ class CarController extends Controller
                 mkdir(public_path('images/cars'), 0777, true);
             }
             $image_resize->save(public_path('images/cars/' . $image_name));
+
+            $car->image = asset('images/cars/' . $image_name);
+            $car->save();
         }
 
         $car->driver_id = $request->driver_id;

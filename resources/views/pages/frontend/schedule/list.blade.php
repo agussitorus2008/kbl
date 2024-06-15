@@ -16,8 +16,7 @@
                 <div class="col-md-6">
                     <div class="card shadow-sm border-0 mb-4">
                         <a class="px-3" href="{{ route('schedule.show', $item->id) }}">
-                            <img class="img-fluid rounded align-top"
-                                src="{{ asset('images/cars/' . $item->car->image) }}" alt="drivers">
+                            <img class="img-fluid rounded align-top" src="{{ $item->car->image }}" alt="drivers">
                             <div class="card-body">
                                 <h4 class="d-flex align-items-center"><a href="#"
                                         class="text-dark text-4 mr-2"></a>

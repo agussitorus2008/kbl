@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\NotificationController;
 Route::name('backend.')->group(function () {
     Route::redirect('/', 'dashboard', 301);
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/api/dashboard-data', [DashboardController::class, 'getDashboardData'])->name('dashboard.data');
 
     // DRIVER
     Route::resource('drivers', DriverController::class);
