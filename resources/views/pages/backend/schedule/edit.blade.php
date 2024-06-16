@@ -66,14 +66,16 @@
                                     <select name="route" class="form-select form-select-solid" data-control="select2"
                                         data-placeholder="Select option">
                                         <option SELECTED DISABLED>Choose Route</option>
-                                        <option value="ML" {{ $data->route == 'ML' ? 'selected' : '' }}>Medan - Laguboti
+                                        <option value="ML" {{ $schedule->route == 'ML' ? 'selected' : '' }}>Medan -
+                                            Laguboti
                                         </option>
-                                        <option value="LM" {{ $data->route == 'LM' ? 'selected' : '' }}>Laguboti - Medan
+                                        <option value="LM" {{ $schedule->route == 'LM' ? 'selected' : '' }}>Laguboti -
+                                            Medan
                                         </option>
-                                        <option value="LS" {{ $data->route == 'LS' ? 'selected' : '' }}>Laguboti -
+                                        <option value="LS" {{ $schedule->route == 'LS' ? 'selected' : '' }}>Laguboti -
                                             Sibolga
                                         </option>
-                                        <option value="SL" {{ $data->route == 'SL' ? 'selected' : '' }}>Sibolga -
+                                        <option value="SL" {{ $schedule->route == 'SL' ? 'selected' : '' }}>Sibolga -
                                             Laguboti
                                         </option>
                                     </select>
@@ -96,7 +98,7 @@
                                         <option SELECTED DISABLED>Driver</option>
                                         @foreach ($cars as $item)
                                             <option value="{{ $item->id }}"
-                                                {{ $item->id == $data->car_id ? 'selected' : '' }}>
+                                                {{ $item->id == $schedule->car_id ? 'selected' : '' }}>
                                                 {{ $item->driver->name }}</option>
                                         @endforeach
                                     </select>
@@ -115,7 +117,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="text" name="departure_time" class="form-control form-control-solid"
-                                        placeholder="Enter departure time" value="{{ $data->departure_time }}" />
+                                        placeholder="Enter departure time" value="{{ $schedule->departure_time }}" />
                                     <!--end::Input-->
                                     <!--begin::Description-->
                                     <div class="text-muted fs-7">Set the departure time that will be used to identify this
@@ -131,7 +133,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="text" name="arrival_time" class="form-control form-control-solid"
-                                        placeholder="Enter arrival time" value="{{ $data->arrival_time }}" />
+                                        placeholder="Enter arrival time" value="{{ $schedule->arrival_time }}" />
                                     <!--end::Input-->
                                     <!--begin::Description-->
                                     <div class="text-muted fs-7">Set the arrival time that will be used to identify this
@@ -147,7 +149,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="text" name="price" class="form-control form-control-solid"
-                                        placeholder="Enter price" value="{{ $data->price }}" />
+                                        placeholder="Enter price" value="{{ $schedule->price }}" />
                                     <!--end::Input-->
                                     <!--begin::Description-->
                                     <div class="text-muted fs-7">Set the price that will be used to identify this schedule.

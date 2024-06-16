@@ -75,7 +75,7 @@
                                     data-kt-image-input="true">
                                     <!--begin::Preview existing primary image-->
                                     <div class="image-input-wrapper w-150px h-150px"
-                                        style="background-image: url('{{ asset('uploads/drivers') }}/{{ $driver->image }}')">
+                                        style="background-image: url('{{ $driver->image }}')">
                                     </div>
                                     <!--end::Preview existing primary image-->
                                     <!--begin::Label-->

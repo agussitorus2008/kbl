@@ -192,7 +192,7 @@
                                         <label for="condition" class="required form-label">Car Number</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="int" class="form-control mb-2" name="car_number"
+                                        <input type="text" class="form-control mb-2" name="car_number"
                                             placeholder="Enter the number of the car..." value="{{ $car->car_number }}" />
                                         <!--end::Input-->
                                         <!--begin::Description-->
@@ -208,7 +208,7 @@
                                         <label for="condition" class="required form-label">Plate Number</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="int" class="form-control mb-2" name="plate_number"
+                                        <input type="text" class="form-control mb-2" name="plate_number"
                                             placeholder="Enter the plate number of the car..."
                                             value="{{ $car->plate_number }}" />
                                         <!--end::Input-->

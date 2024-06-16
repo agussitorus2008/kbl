@@ -997,7 +997,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('admin.schedule.index') }}",
+                    url: "{{ route('backend.schedules.index') }}",
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -1028,7 +1028,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('admin.order.index') }}",
+                    url: "{{ route('backend.orders.index') }}",
                 },
                 columns: [{
                         data: 'DT_RowIndex',
