@@ -30,7 +30,7 @@
         </div>
     </div>
 @endsection
-@section('scripts')
+@push('scripts')
     <script>
         function send(url) {
             $.ajax({
@@ -59,4 +59,4 @@
             });
         }
     </script>
-@endsection
+@endpush
